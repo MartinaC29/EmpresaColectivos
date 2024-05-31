@@ -9,5 +9,101 @@ package entidades;
  * @author pablo
  */
 public class Pasajero {
+    private int idPasajero;
+    private String nombre;
+    private String apellido;
+    private int dni;
+    private String correo;
+    private int tel;
+    private boolean estado;
+
+    public Pasajero() {
+    }
+
+    public Pasajero(String nombre, String apellido, int dni, String correo, int tel, boolean estado) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.correo = correo;
+        this.tel = tel;
+        this.estado = estado;
+    }
+
+    public Pasajero(int idPasajero, String nombre, String apellido, int dni, String correo, int tel, boolean estado) {
+        this.idPasajero = idPasajero;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.correo = correo;
+        this.tel = tel;
+        this.estado = estado;
+    }
+
+    public int getIdPasejero() {
+        return idPasajero;
+    }
+
+    public void setIdPasejero(int idPasejero) {
+        this.idPasajero = idPasejero;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public int getDni() {
+        return dni;
+    }
+
+    public void setDni(int dni) {
+        this.dni = dni;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public int getTel() {
+        return tel;
+    }
+
+    public void setTel(int tel) {
+        this.tel = tel;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+    
+    
+    public String toString(){
+        return "Pasajero: {" + "idPasajero "+ idPasajero + "nombre " + nombre + "apellido " + apellido + "}";
+    }
+    
+    
+    
+    
+    
+    
     
 }
