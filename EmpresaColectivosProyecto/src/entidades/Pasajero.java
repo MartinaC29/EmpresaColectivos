@@ -95,9 +95,9 @@ public class Pasajero {
         this.estado = estado;
     }
     
-    
+    @Override
     public String toString(){
-        return "Pasajero: {" + "idPasajero "+ idPasajero + "nombre " + nombre + "apellido " + apellido + "}";
+        return "Pasajero: {" + "idPasajero "+ idPasajero + "nombre " + nombre + "apellido " + apellido + "dni" + dni + '}';
     }
     
     
