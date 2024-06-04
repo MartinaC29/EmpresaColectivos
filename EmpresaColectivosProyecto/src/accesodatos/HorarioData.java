@@ -7,6 +7,7 @@ package accesodatos;
 import entidades.Horario;
 import java.sql.*;
 import javax.swing.JOptionPane;
+import java.sql.Time;
 
 /**
  *
@@ -14,7 +15,8 @@ import javax.swing.JOptionPane;
  */
 public class HorarioData {
     private Connection con = null;
-
+    RutaData rData = new RutaData();
+    
     public HorarioData() {
         this.con = Conexion.getConexion();
     }
@@ -26,10 +28,9 @@ public class HorarioData {
         try {
             PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             ps.setString(1,horario.getRuta().getIdRuta()+"");
-            ps.setTime(2,horario.getHoraSalida());
-            ps.setTime(3,horario.getModelo());
-            ps.setInt(4,horario.getCapacidad());
-            ps.setBoolean(5, horario.isEstado());
+            ps.setTime(2,Time.valueOf(horario.getHoraSalida()));
+            ps.setTime(3,Time.valueOf(horario.getHoraLlegada()));
+            ps.setBoolean(4, horario.isEstado());
             ResultSet rs = ps.getGeneratedKeys();
             
             while (rs.next()) {
@@ -44,7 +45,7 @@ public class HorarioData {
     public Horario buscarhorario(int id){
         Horario horario = null;
         
-        String sql = "SELECT `matricula`, `marca`, `modelo`, `capacidad` FROM `alumno` WHERE idAlumno = ? AND estado = 1";
+        String sql = "SELECT `idRuta`, `horaSalida`, `horaLlegada`, FROM `horario` WHERE idHorario = ? AND estado = 1";
         
         try {
            PreparedStatement ps = con.prepareStatement(sql);
@@ -52,12 +53,11 @@ public class HorarioData {
            
            ResultSet rs = ps.executeQuery();
            
-            if (rs.next()) {
-                horario.setIdhorario(id);
-                horario.setMatricula(rs.getString("matricula"));
-                horario.setMarca(rs.getString("marca"));
-                horario.setModelo(rs.getString("modelo"));
-                horario.setCapacidad(rs.getInt("capacidad"));
+            if (rs.next()) {                           
+                horario.setIdHorario(id);
+                horario.setRuta(rData.buscarRuta(rs.getInt("idRuta")));
+                horario.setHoraSalida(rs.getTime("horaSalida").toLocalTime());
+                horario.setHoraLlegada(rs.getTime("horaLlegada").toLocalTime());
                 horario.setEstado(true);
             }
             
@@ -84,17 +84,16 @@ public class HorarioData {
     }
     
     public void actualizarhorario(Horario horario){
-        String sql = "UPDATE horario SET matricula= ?,marca= ?,modelo= ?,capacidad= ? "
+        String sql = "UPDATE horario SET idRuta= ?,horaSalida= ?,horaLlegada= ? "
                     + "WHERE idhorario = ?";
         
         try{
             PreparedStatement ps = con.prepareStatement(sql);
             
-            ps.setString(1,horario.getMatricula());
-            ps.setString(2,horario.getMarca());
-            ps.setString(3,horario.getModelo());
-            ps.setInt(4,horario.getCapacidad());
-            ps.setInt(5,horario.getIdhorario());
+            ps.setInt(1,horario.getRuta().getIdRuta());
+            ps.setTime(2,Time.valueOf(horario.getHoraSalida()));
+            ps.setTime(3,Time.valueOf(horario.getHoraLlegada()));
+            ps.setInt(4,horario.getIdHorario());
             
             int fila = ps.executeUpdate();
                     
