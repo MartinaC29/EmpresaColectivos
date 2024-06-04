@@ -20,21 +20,11 @@ public class Pasaje {
     private LocalTime horaViaje;
     private int asiento;
     private double precio;
-    
-    
 
-    
-
-    public Pasaje(Pasajero pasajero, Colectivo colectivo, Ruta ruta, LocalDate fechaViaje, LocalTime horaViaje, int asiento, double precio) {
-        this.pasajero = pasajero;
-        this.colectivo = colectivo;
-        this.ruta = ruta;
-        this.fechaViaje = fechaViaje;
-        this.horaViaje = horaViaje;
-        this.asiento = asiento;
-        this.precio = precio;
+    public Pasaje() {
+        
     }
-
+    
     public Pasaje(int idPasaje, Pasajero pasajero, Colectivo colectivo, Ruta ruta, LocalDate fechaViaje, LocalTime horaViaje, int asiento, double precio) {
         this.idPasaje = idPasaje;
         this.pasajero = pasajero;
@@ -45,7 +35,18 @@ public class Pasaje {
         this.asiento = asiento;
         this.precio = precio;
     }
+    
+    public Pasaje(Pasajero pasajero, Colectivo colectivo, Ruta ruta, LocalDate fechaViaje, LocalTime horaViaje, int asiento, double precio) {
+        this.pasajero = pasajero;
+        this.colectivo = colectivo;
+        this.ruta = ruta;
+        this.fechaViaje = fechaViaje;
+        this.horaViaje = horaViaje;
+        this.asiento = asiento;
+        this.precio = precio;
+    }
 
+    
     public int getIdPasaje() {
         return idPasaje;
     }
