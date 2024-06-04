@@ -80,7 +80,7 @@ public class RutaData {
                 ruta.setIdRuta(id);
                 ruta.setOrigen(rs.getString("origen"));
                 ruta.setDestino(rs.getString("destino"));
-                ruta.setDuracionEstimada(rs.getTime("duracionEstimda").toLocalTime());
+                ruta.setDuracionEstimada(rs.getTime("duracionEstimada").toLocalTime());
                 ruta.setEstado(true);
                 
             }else{

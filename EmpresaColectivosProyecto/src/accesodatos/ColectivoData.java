@@ -30,6 +30,7 @@ public class ColectivoData {
             ps.setString(3,colectivo.getModelo());
             ps.setInt(4,colectivo.getCapacidad());
             ps.setBoolean(5, colectivo.isEstado());
+            ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             
             while (rs.next()) {

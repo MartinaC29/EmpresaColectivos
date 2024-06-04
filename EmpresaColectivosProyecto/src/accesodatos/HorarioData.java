@@ -23,14 +23,15 @@ public class HorarioData {
     
     public void guardarhorario(Horario horario){
         String sql = "INSERT INTO horario(idRuta,horaSalida,horaLlegada,estado) "
-                + "VALUES (?,?,?,?,?)";
+                + "VALUES (?,?,?,?)";
         
         try {
             PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1,horario.getRuta().getIdRuta()+"");
+            ps.setInt(1,horario.getRuta().getIdRuta());
             ps.setTime(2,Time.valueOf(horario.getHoraSalida()));
             ps.setTime(3,Time.valueOf(horario.getHoraLlegada()));
             ps.setBoolean(4, horario.isEstado());
+            ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             
             while (rs.next()) {
