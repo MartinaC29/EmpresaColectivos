@@ -74,6 +74,11 @@ public class Ruta {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
+
+    @Override
+    public String toString() {
+        return "Ruta{" + "idRuta=" + idRuta + ", origen=" + origen + ", destino=" + destino + ", duracionEstimada=" + duracionEstimada + ", estado=" + estado + '}';
+    }
     
     
 }

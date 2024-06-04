@@ -46,7 +46,7 @@ public class HorarioData {
     public Horario buscarhorario(int id){
         Horario horario = null;
         
-        String sql = "SELECT `idRuta`, `horaSalida`, `horaLlegada`, FROM `horario` WHERE idHorario = ? AND estado = 1";
+        String sql = "SELECT `idRuta`, `horaSalida`, `horaLlegada` FROM `horario` WHERE idHorario = ? AND estado = 1";
         
         try {
            PreparedStatement ps = con.prepareStatement(sql);
@@ -54,7 +54,8 @@ public class HorarioData {
            
            ResultSet rs = ps.executeQuery();
            
-            if (rs.next()) {                           
+            if (rs.next()) {
+                horario = new Horario();
                 horario.setIdHorario(id);
                 horario.setRuta(rData.buscarRuta(rs.getInt("idRuta")));
                 horario.setHoraSalida(rs.getTime("horaSalida").toLocalTime());

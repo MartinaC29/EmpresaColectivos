@@ -6,8 +6,6 @@ package accesodatos;
 import entidades.Ruta;
 import java.sql.Connection;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -101,7 +99,7 @@ public class RutaData {
             
             int filas = ps.executeUpdate();
             if (filas == 1) {
-                System.out.println("Se ha eliminado la ruta");
+                JOptionPane.showMessageDialog(null,"Se ha eliminado la ruta");
             }
                     
         }catch (SQLException ex) {
