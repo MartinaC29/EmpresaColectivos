@@ -6,6 +6,7 @@ package accesodatos;
 
 import entidades.Colectivo;
 import java.sql.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -24,23 +25,85 @@ public class ColectivoData {
         
         try {
             PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1,colectivo.getMarca());
+            ps.setString(1,colectivo.getMatricula());
+            ps.setString(2,colectivo.getMarca());
+            ps.setString(3,colectivo.getModelo());
+            ps.setInt(4,colectivo.getCapacidad());
+            ps.setBoolean(5, colectivo.isEstado());
+            ResultSet rs = ps.getGeneratedKeys();
+            
+            while (rs.next()) {
+                JOptionPane.showMessageDialog(null, "Colectivo guardado");
+            }
             
         } catch (SQLException ex) {
             System.out.println("Error al acceder a la tabla colectivo, error: " + ex);
         }
     }
     
-    public void buscarColectivo(){
+    public Colectivo buscarColectivo(int id){
+        Colectivo colectivo = null;
         
+        String sql = "SELECT `matricula`, `marca`, `modelo`, `capacidad` FROM `alumno` WHERE idAlumno = ? AND estado = 1";
+        
+        try {
+           PreparedStatement ps = con.prepareStatement(sql);
+           ps.setInt(1, id);
+           
+           ResultSet rs = ps.executeQuery();
+           
+            if (rs.next()) {
+                colectivo.setIdColectivo(id);
+                colectivo.setMatricula(rs.getString("matricula"));
+                colectivo.setMarca(rs.getString("marca"));
+                colectivo.setModelo(rs.getString("modelo"));
+                colectivo.setCapacidad(rs.getInt("capacidad"));
+                colectivo.setEstado(true);
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println("Error al acceder a la tabla colectivo, error: " + ex);
+        }
+        return colectivo;
     }
     
-    public void eliminarColectivo(){
-        
+    public void eliminarColectivo(int id){
+        String sql = "UPDATE colectivo SET estado = 0 WHERE idColectivo = ? ";
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            
+            ps.setInt(1, id);
+            int filas = ps.executeUpdate();
+            if (filas == 1) {
+                JOptionPane.showMessageDialog(null,"Se ha eliminado el colectivo");
+            }
+            
+        }catch (SQLException ex) {
+            System.out.println("Error al acceder a la tabla colectivo, error: " + ex);
+        }
     }
     
-    public void actualizarColectivo(){
+    public void actualizarColectivo(Colectivo colectivo){
+        String sql = "UPDATE colectivo SET matricula= ?,marca= ?,modelo= ?,capacidad= ? "
+                    + "WHERE idColectivo = ?";
         
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            
+            ps.setString(1,colectivo.getMatricula());
+            ps.setString(2,colectivo.getMarca());
+            ps.setString(3,colectivo.getModelo());
+            ps.setInt(4,colectivo.getCapacidad());
+            ps.setInt(5,colectivo.getIdColectivo());
+            
+            int fila = ps.executeUpdate();
+                    
+            if (fila == 1) {
+                JOptionPane.showMessageDialog(null, "Colectivo modificado");
+            }
+        }catch (SQLException ex) {
+            System.out.println("Error al acceder a la tabla colectivo, error: " + ex);
+        }
     }
 }
 
