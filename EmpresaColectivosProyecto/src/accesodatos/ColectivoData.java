@@ -30,6 +30,7 @@ public class ColectivoData {
             ps.setString(3,colectivo.getModelo());
             ps.setInt(4,colectivo.getCapacidad());
             ps.setBoolean(5, colectivo.isEstado());
+            ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             
             while (rs.next()) {
@@ -44,7 +45,7 @@ public class ColectivoData {
     public Colectivo buscarColectivo(int id){
         Colectivo colectivo = null;
         
-        String sql = "SELECT `matricula`, `marca`, `modelo`, `capacidad` FROM `alumno` WHERE idAlumno = ? AND estado = 1";
+        String sql = "SELECT `matricula`, `marca`, `modelo`, `capacidad` FROM `colectivo` WHERE idColectivo = ? AND estado = 1";
         
         try {
            PreparedStatement ps = con.prepareStatement(sql);
@@ -53,6 +54,7 @@ public class ColectivoData {
            ResultSet rs = ps.executeQuery();
            
             if (rs.next()) {
+                colectivo = new Colectivo();
                 colectivo.setIdColectivo(id);
                 colectivo.setMatricula(rs.getString("matricula"));
                 colectivo.setMarca(rs.getString("marca"));

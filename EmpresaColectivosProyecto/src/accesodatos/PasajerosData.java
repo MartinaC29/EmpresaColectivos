@@ -105,7 +105,7 @@ public class PasajerosData {
             
             int filas = ps.executeUpdate();
             if (filas == 1) {
-                System.out.println("Se ha eliminado el pasajero");
+                JOptionPane.showMessageDialog(null,"Se ha eliminado el pasajero");
             }
                     
         }catch (SQLException ex) {
