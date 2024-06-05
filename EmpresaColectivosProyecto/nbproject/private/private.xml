@@ -2,16 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-<<<<<<< HEAD
-            <file>file:/C:/Users/pablo/Desktop/EmpresaColectivos/EmpresaColectivosProyecto/src/accesodatos/ColectivoData.java</file>
-            <file>file:/C:/Users/pablo/Desktop/EmpresaColectivos/EmpresaColectivosProyecto/src/accesodatos/Conexion.java</file>
-            <file>file:/C:/Users/pablo/Desktop/EmpresaColectivos/EmpresaColectivosProyecto/src/entidades/Colectivo.java</file>
-=======
-            <file>file:/Users/martinacallegaro/EmpresaColectivos/EmpresaColectivosProyecto/src/entidades/Pasajero.java</file>
-            <file>file:/Users/martinacallegaro/EmpresaColectivos/EmpresaColectivosProyecto/src/accesodatos/RutaData.java</file>
-            <file>file:/Users/martinacallegaro/EmpresaColectivos/EmpresaColectivosProyecto/src/accesodatos/PasajerosData.java</file>
->>>>>>> fb625261196ce303ae837764aacfee6e828a937f
-        </group>
+        <group/>
     </open-files>
 </project-private>

@@ -19,6 +19,9 @@ import javax.swing.JOptionPane;
  */
 public class PasajeData {
     private Connection con = null;
+    RutaData rData = new RutaData();
+    PasajerosData pasData = new PasajerosData();
+    ColectivoData colData = new ColectivoData();
     
     public PasajeData(){
         con = Conexion.getConexion();
@@ -75,17 +78,57 @@ public class PasajeData {
         }     
     }
     
-    public Pasaje buscarPasaje(){
-        
+    public Pasaje buscarPasaje(int id){
+        Pasaje pasaje = null;
+
+       
+        try{
+            String sql = " SELECT idPasajero, idColectivo, idruta, fechaViaje, horaViaje, asiento, precio " +
+                    " FROM pasaje WHERE idPasaje = ? ";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next()){
+                pasaje = new Pasaje();
+                pasaje.setPasajero(pasData.buscarPasajero(rs.getInt("idPasajero")));
+                pasaje.setColectivo(colData.buscarColectivo(rs.getInt("idColectivo")));
+                pasaje.setRuta(rData.buscarRuta(rs.getInt("idRuta")));
+                pasaje.setFechaViaje(rs.getDate("fechaViaje").toLocalDate());
+                pasaje.setHoraViaje(rs.getTime("horaViaje").toLocalTime());
+                pasaje.setAsiento(rs.getInt("asiento"));
+                pasaje.setPrecio(rs.getDouble("precio"));              
+            }else{
+                JOptionPane.showMessageDialog(null, "No existe el pasaje con id: " + id);
+            }  
+            
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Error al acceder a la tabla pasaje");
+        } 
+        return pasaje;    
     }
     
-    
-    
-    
+     
     public void eliminarPasaje(int id){
-        
+        try{
+            String sql = " DELETE FROM pasaje WHERE idPasaje = ? ";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+             
+            int filas = ps.executeUpdate();
+            if (filas == 1) {
+                System.out.println("Se ha eliminado el pasaje");
+            }
+             
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Error al acceder a la tabla pasaje");
+        }      
     }
     
+    
+    
+    
+   
     
     
     
