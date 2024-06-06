@@ -8,6 +8,11 @@ import entidades.Horario;
 import java.sql.*;
 import javax.swing.JOptionPane;
 import java.sql.Time;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+import accesodatos.RutaData;
+import entidades.Ruta;
 
 /**
  *
@@ -106,4 +111,65 @@ public class HorarioData {
             System.out.println("Error al acceder a la tabla horario, error: " + ex);
         }
     }
+    
+    public List<Horario> listaHorarioRutas(Ruta ruta){
+        List<Horario> horarios = new ArrayList<>();
+        
+        try{
+            String sql = " SELECT * FROM horario INNER JOIN ruta ON horario.idRuta = ruta.idRuta " + 
+                    " WHERE ruta.origen = ? AND ruta.destino = ? AND horario.estado = 1 ";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, ruta.getOrigen());
+            ps.setString(2, ruta.getDestino());
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Horario horario = new Horario();
+                horario.setIdHorario(rs.getInt("idHorario"));
+                horario.setRuta(ruta);
+                horario.setHoraSalida(rs.getTime("horaSalida").toLocalTime());
+                horario.setHoraLlegada(rs.getTime("horaLlegada").toLocalTime());
+                horario.setEstado(rs.getBoolean("estado"));
+                horarios.add(horario);             
+            }
+            rs.close();
+            ps.close();
+            
+        }catch (SQLException ex) {
+            System.out.println("Error al acceder a la tabla horario, error: " + ex);
+        }
+        return horarios;   
+    }
+    
+    public List<Horario> listaHorarioSalida(LocalTime horaSalida){
+        List<Horario> horarios = new ArrayList<>();
+        
+        try{
+            String sql = " SELECT * FROM horario INNER JOIN ruta ON horario.idRuta = ruta.idRuta WHERE horaSalida = ? AND estado = 1 ";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setTime(1, Time.valueOf(horaSalida));
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Horario horario = new Horario();
+                horario.setIdHorario(rs.getInt("idHorario"));
+                horario.setRuta(rData.buscarRuta(rs.getInt("idRuta")));
+                horario.setHoraSalida(rs.getTime("horaSalida").toLocalTime());
+                horario.setHoraLlegada(rs.getTime("horaLlegada").toLocalTime());
+                horario.setEstado(rs.getBoolean("estado"));
+                horarios.add(horario); 
+            }
+            rs.close();
+            ps.close();
+            
+        }catch (SQLException ex) {
+            System.out.println("Error al acceder a la tabla horario, error: " + ex);
+        }
+        return horarios;
+        
+    }
+    
+    
+    
+    
+    
+    
 }
