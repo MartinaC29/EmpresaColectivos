@@ -39,12 +39,12 @@ public class Pasajero {
         this.estado = estado;
     }
 
-    public int getIdPasejero() {
+    public int getIdPasajero() {
         return idPasajero;
     }
 
-    public void setIdPasejero(int idPasejero) {
-        this.idPasajero = idPasejero;
+    public void setIdPasajero(int idPasajero) {
+        this.idPasajero = idPasajero;
     }
 
     public String getNombre() {

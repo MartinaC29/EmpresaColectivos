@@ -5,9 +5,8 @@
 package accesodatos;
 
 import entidades.Pasaje;
-import entidades.Ruta;
 import entidades.Pasajero;
-import entidades.Colectivo;
+import entidades.Ruta;
 import java.sql.Connection;
 import java.sql.*;
 import java.util.ArrayList;
@@ -32,7 +31,7 @@ public class PasajeData {
                     " VALUES (?,?,?,?,?,?,?) ";
         try{
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, pasaje.getPasajero().getIdPasejero());
+            ps.setInt(1, pasaje.getPasajero().getIdPasajero());
             ps.setInt(2, pasaje.getColectivo().getIdColectivo());
             ps.setInt(3, pasaje.getRuta().getIdRuta());
             ps.setDate(4, Date.valueOf(pasaje.getFechaViaje()));
@@ -52,14 +51,13 @@ public class PasajeData {
         }   
     }
     
-    
     public void actualizarPasaje(Pasaje pasaje){
         try{
            String sql = " UPDATE pasaje SET idPasajero = ?, idColectivo = ?, idruta = ?,fechaViaje = ?, horaViaje = ?, asiento = ?, precio = ? " +
                 " WHERE idPasaje = ? "; 
            
            PreparedStatement ps = con.prepareStatement(sql);
-           ps.setInt(1, pasaje.getPasajero().getIdPasejero());
+           ps.setInt(1, pasaje.getPasajero().getIdPasajero());
            ps.setInt(2, pasaje.getColectivo().getIdColectivo());
            ps.setInt(3, pasaje.getRuta().getIdRuta());
            ps.setDate(4, Date.valueOf(pasaje.getFechaViaje()));
@@ -107,8 +105,7 @@ public class PasajeData {
         } 
         return pasaje;    
     }
-    
-     
+       
     public void eliminarPasaje(int id){
         try{
             String sql = " DELETE FROM pasaje WHERE idPasaje = ? ";
@@ -124,14 +121,158 @@ public class PasajeData {
             JOptionPane.showMessageDialog(null,"Error al acceder a la tabla pasaje");
         }      
     }
+      
+    public List<Pasaje> listarPasajes(){
+        List<Pasaje> pasajes = new ArrayList<>();
+        String sql = "SELECT * FROM pasajes";  
+        RutaData rutaData = new RutaData();
+        PasajerosData pasData = new PasajerosData();
+        ColectivoData colData = new ColectivoData();
+        
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                Pasaje pasaje = new Pasaje();
+                pasaje.setIdPasaje(rs.getInt("idPasaje"));
+                pasaje.setPasajero(pasData.buscarPasajero(rs.getInt("idPasajero")));
+                pasaje.setColectivo(colData.buscarColectivo(rs.getInt("idColectivo")));
+                pasaje.setRuta(rutaData.buscarRuta(rs.getInt("idRuta")));
+                pasaje.setFechaViaje(rs.getDate("fechaViaje").toLocalDate());
+                pasaje.setHoraViaje(rs.getTime("horaViaje").toLocalTime());
+                pasaje.setAsiento(rs.getInt("asiento"));
+                pasaje.setPrecio(rs.getDouble("precio"));
+                pasajes.add(pasaje);
+            }
+            
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla pasajes");
+        }
+        return pasajes;
+    }
     
+    public List<Pasaje> listarPorRuta(Ruta ruta){
+       List<Pasaje> pasajes = new ArrayList<>();
+        String sql = "SELECT * FROM pasajes WHERE idRuta = ?";  
+        RutaData rutaData = new RutaData();
+        PasajerosData pasData = new PasajerosData();
+        ColectivoData colData = new ColectivoData();
+        
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, ruta.getIdRuta());
+            ResultSet rs = ps.executeQuery();
+                    
+            while (rs.next()) {
+                Pasaje pasaje = new Pasaje();
+                pasaje.setIdPasaje(rs.getInt("idPasaje"));
+                pasaje.setPasajero(pasData.buscarPasajero(rs.getInt("idPasajero")));
+                pasaje.setColectivo(colData.buscarColectivo(rs.getInt("idColectivo")));
+                pasaje.setRuta(rutaData.buscarRuta(rs.getInt("idRuta")));
+                pasaje.setFechaViaje(rs.getDate("fechaViaje").toLocalDate());
+                pasaje.setHoraViaje(rs.getTime("horaViaje").toLocalTime());
+                pasaje.setAsiento(rs.getInt("asiento"));
+                pasaje.setPrecio(rs.getDouble("precio"));
+                pasajes.add(pasaje);
+            }
+            
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla pasajes");
+        }
+        return pasajes; 
+    }
     
+    public List<Pasaje> listarPorHorario(Time hora){
+        List<Pasaje> pasajes = new ArrayList<>();
+        String sql = "SELECT * FROM pasajes WHERE horaViaje = ?";  
+        RutaData rutaData = new RutaData();
+        PasajerosData pasData = new PasajerosData();
+        ColectivoData colData = new ColectivoData();
+        
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setTime(1, hora);
+            ResultSet rs = ps.executeQuery();
+                    
+            while (rs.next()) {
+                Pasaje pasaje = new Pasaje();
+                pasaje.setIdPasaje(rs.getInt("idPasaje"));
+                pasaje.setPasajero(pasData.buscarPasajero(rs.getInt("idPasajero")));
+                pasaje.setColectivo(colData.buscarColectivo(rs.getInt("idColectivo")));
+                pasaje.setRuta(rutaData.buscarRuta(rs.getInt("idRuta")));
+                pasaje.setFechaViaje(rs.getDate("fechaViaje").toLocalDate());
+                pasaje.setHoraViaje(rs.getTime("horaViaje").toLocalTime());
+                pasaje.setAsiento(rs.getInt("asiento"));
+                pasaje.setPrecio(rs.getDouble("precio"));
+                pasajes.add(pasaje);
+            }
+            
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla pasajes");
+        }
+        return pasajes;
+    }
     
+    public List<Pasaje> listarPorPasajero(Pasajero pasajero){
+        List<Pasaje> pasajes = new ArrayList<>();
+        String sql = "SELECT * FROM pasajes WHERE idPasajero = ?";  
+        RutaData rutaData = new RutaData();
+        PasajerosData pasData = new PasajerosData();
+        ColectivoData colData = new ColectivoData();
+        
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, pasajero.getIdPasajero());
+            ResultSet rs = ps.executeQuery();
+                    
+            while (rs.next()) {
+                Pasaje pasaje = new Pasaje();
+                pasaje.setIdPasaje(rs.getInt("idPasaje"));
+                pasaje.setPasajero(pasData.buscarPasajero(rs.getInt("idPasajero")));
+                pasaje.setColectivo(colData.buscarColectivo(rs.getInt("idColectivo")));
+                pasaje.setRuta(rutaData.buscarRuta(rs.getInt("idRuta")));
+                pasaje.setFechaViaje(rs.getDate("fechaViaje").toLocalDate());
+                pasaje.setHoraViaje(rs.getTime("horaViaje").toLocalTime());
+                pasaje.setAsiento(rs.getInt("asiento"));
+                pasaje.setPrecio(rs.getDouble("precio"));
+                pasajes.add(pasaje);
+            }
+            
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla pasajes");
+        }
+        return pasajes;
+    }
     
-   
-    
-    
-    
-    
-    
+    public List<Pasaje> listarRutaYHorarioPorPasajero(){
+        List<Pasaje> pasajes = new ArrayList<>();
+        String sql = "SELECT ruta.*,horario.* FROM pasajes WHERE ruta = ?";  
+        RutaData rutaData = new RutaData();
+        PasajerosData pasData = new PasajerosData();
+        ColectivoData colData = new ColectivoData();
+        
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, ruta.getIdRuta());
+            ResultSet rs = ps.executeQuery();
+                    
+            while (rs.next()) {
+                Pasaje pasaje = new Pasaje();
+                pasaje.setIdPasaje(rs.getInt("idPasaje"));
+                pasaje.setPasajero(pasData.buscarPasajero(rs.getInt("idPasajero")));
+                pasaje.setColectivo(colData.buscarColectivo(rs.getInt("idColectivo")));
+                pasaje.setRuta(rutaData.buscarRuta(rs.getInt("idRuta")));
+                pasaje.setFechaViaje(rs.getDate("fechaViaje").toLocalDate());
+                pasaje.setHoraViaje(rs.getTime("horaViaje").toLocalTime());
+                pasaje.setAsiento(rs.getInt("asiento"));
+                pasaje.setPrecio(rs.getDouble("precio"));
+                pasajes.add(pasaje);
+            }
+            
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla pasajes");
+        }
+        return pasajes;
+    }
 }

@@ -35,7 +35,7 @@ public class PasajerosData {
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             while(rs.next()){
-                pasajero.setIdPasejero(rs.getInt(1));
+                pasajero.setIdPasajero(rs.getInt(1));
                 JOptionPane.showMessageDialog(null, "Pasajero guardado");
             }
             ps.close();
@@ -113,11 +113,83 @@ public class PasajerosData {
         }
     }
     
+    public List<Pasajero> listarPasajeros(){
+        List<Pasajero> pasajeros = new ArrayList<>();
+        String sql = "SELECT * FROM pasajero WHERE estado = 1";
+        
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                Pasajero pasajero = new Pasajero();
+                pasajero.setIdPasajero(rs.getInt("idPasajero"));
+                pasajero.setNombre(rs.getString("nombre"));
+                pasajero.setApellido(rs.getString("apellido"));
+                pasajero.setDni(rs.getInt("dni"));
+                pasajero.setCorreo(rs.getString("correo"));
+                pasajero.setTel(rs.getInt("telefono"));
+                pasajero.setEstado(rs.getBoolean("estado"));
+                pasajeros.add(pasajero);
+            }
+            
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Error al acceder a la tabla pasajeros");
+        }
+        return pasajeros;
+    }
     
+    public List<Pasajero> listarPorNombre(String nombre){
+        List<Pasajero> pasajeros = new ArrayList<>();
+        String sql = "SELECT * FROM pasajero WHERE estado = 1 AND nombre = ?";
+        
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, nombre);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                Pasajero pasajero = new Pasajero();
+                pasajero.setIdPasajero(rs.getInt("idPasajero"));
+                pasajero.setNombre(rs.getString("nombre"));
+                pasajero.setApellido(rs.getString("apellido"));
+                pasajero.setDni(rs.getInt("dni"));
+                pasajero.setCorreo(rs.getString("correo"));
+                pasajero.setTel(rs.getInt("telefono"));
+                pasajero.setEstado(rs.getBoolean("estado"));
+                pasajeros.add(pasajero);
+            }
+            
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Error al acceder a la tabla pasajeros");
+        }
+        return pasajeros;
+    }
     
-    
-    
-    
-    
-    
+    public List<Pasajero> listarPorApellido(String apellido){
+      List<Pasajero> pasajeros = new ArrayList<>();
+        String sql = "SELECT * FROM pasajero WHERE estado = 1 AND apellido = ?";
+        
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, apellido);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                Pasajero pasajero = new Pasajero();
+                pasajero.setIdPasajero(rs.getInt("idPasajero"));
+                pasajero.setNombre(rs.getString("nombre"));
+                pasajero.setApellido(rs.getString("apellido"));
+                pasajero.setDni(rs.getInt("dni"));
+                pasajero.setCorreo(rs.getString("correo"));
+                pasajero.setTel(rs.getInt("telefono"));
+                pasajero.setEstado(rs.getBoolean("estado"));
+                pasajeros.add(pasajero);
+            }
+            
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Error al acceder a la tabla pasajeros");
+        }
+        return pasajeros; 
+    }
 }
