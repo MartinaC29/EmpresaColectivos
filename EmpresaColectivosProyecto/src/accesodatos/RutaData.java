@@ -6,6 +6,8 @@ package accesodatos;
 import entidades.Ruta;
 import java.sql.Connection;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -106,6 +108,85 @@ public class RutaData {
             JOptionPane.showMessageDialog(null,"Error al acceder a la tabla ruta");
         }
     }
+    
+    public List<Ruta> listaRutasDispo(){
+        List<Ruta> rutas = new ArrayList<>();
+        
+        try{
+            String sql = " SELECT * FROM ruta WHERE estado = 1 ";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Ruta ruta = new Ruta();
+                ruta.setIdRuta(rs.getInt("idRuta"));
+                ruta.setOrigen(rs.getString("origen"));
+                ruta.setDestino(rs.getString("destino"));
+                ruta.setDuracionEstimada(rs.getTime("duracionEstimada").toLocalTime());
+                ruta.setEstado(rs.getBoolean("estado"));
+                rutas.add(ruta);
+            }
+            rs.close();
+            ps.close();
+            
+            
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Error al acceder a la tabla ruta");
+        }
+        return rutas;
+    }
+    
+    public List<Ruta> listaRutasOrigen(String origen){
+        List<Ruta> rutas = new ArrayList<>();
+        
+        try{
+            String sql = " SELECT * FROM ruta WHERE origen = ? AND estado = 1 ";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, origen);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Ruta ruta = new Ruta();
+                ruta.setIdRuta(rs.getInt("idRuta"));
+                ruta.setOrigen(rs.getString("origen"));
+                ruta.setDestino(rs.getString("destino"));
+                ruta.setDuracionEstimada(rs.getTime("duracionEstimada").toLocalTime());
+                ruta.setEstado(rs.getBoolean("estado"));
+                rutas.add(ruta);
+            }
+            rs.close();
+            ps.close();
+            
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Error al acceder a la tabla ruta");
+        }
+        return rutas;
+    }
+    
+    public List<Ruta> listaRutasDestino(String destino){
+        List<Ruta> rutas = new ArrayList<>();
+        
+        try{
+            String sql = " SELECT * FROM ruta WHERE destino = ? AND estado = 1 ";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, destino);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Ruta ruta = new Ruta();
+                ruta.setIdRuta(rs.getInt("idRuta"));
+                ruta.setOrigen(rs.getString("origen"));
+                ruta.setDestino(rs.getString("destino"));
+                ruta.setDuracionEstimada(rs.getTime("duracionEstimada").toLocalTime());
+                ruta.setEstado(rs.getBoolean("estado"));
+                rutas.add(ruta);
+            }
+            rs.close();
+            ps.close();
+            
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Error al acceder a la tabla ruta");
+        }
+        return rutas;
+    }
+    
     
     
     
