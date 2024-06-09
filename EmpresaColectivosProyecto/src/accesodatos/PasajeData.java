@@ -245,34 +245,4 @@ public class PasajeData {
         return pasajes;
     }
     
-    public List<Pasaje> listarRutaYHorarioPorPasajero(){
-        List<Pasaje> pasajes = new ArrayList<>();
-        String sql = "SELECT ruta.*,horario.* FROM pasajes WHERE ruta = ?";  
-        RutaData rutaData = new RutaData();
-        PasajerosData pasData = new PasajerosData();
-        ColectivoData colData = new ColectivoData();
-        
-        try{
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, ruta.getIdRuta());
-            ResultSet rs = ps.executeQuery();
-                    
-            while (rs.next()) {
-                Pasaje pasaje = new Pasaje();
-                pasaje.setIdPasaje(rs.getInt("idPasaje"));
-                pasaje.setPasajero(pasData.buscarPasajero(rs.getInt("idPasajero")));
-                pasaje.setColectivo(colData.buscarColectivo(rs.getInt("idColectivo")));
-                pasaje.setRuta(rutaData.buscarRuta(rs.getInt("idRuta")));
-                pasaje.setFechaViaje(rs.getDate("fechaViaje").toLocalDate());
-                pasaje.setHoraViaje(rs.getTime("horaViaje").toLocalTime());
-                pasaje.setAsiento(rs.getInt("asiento"));
-                pasaje.setPrecio(rs.getDouble("precio"));
-                pasajes.add(pasaje);
-            }
-            
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla pasajes");
-        }
-        return pasajes;
-    }
 }
