@@ -115,7 +115,7 @@ public class PasajerosData {
     
     public List<Pasajero> listarPasajeros(){
         List<Pasajero> pasajeros = new ArrayList<>();
-        String sql = "SELECT * FROM pasajero WHERE estado = 1";
+        String sql = "SELECT * FROM pasajeros WHERE estado = 1";
         
         try{
             PreparedStatement ps = con.prepareStatement(sql);
@@ -141,7 +141,7 @@ public class PasajerosData {
     
     public List<Pasajero> listarPorNombre(String nombre){
         List<Pasajero> pasajeros = new ArrayList<>();
-        String sql = "SELECT * FROM pasajero WHERE estado = 1 AND nombre = ?";
+        String sql = "SELECT * FROM pasajeros WHERE estado = 1 AND nombre = ?";
         
         try{
             PreparedStatement ps = con.prepareStatement(sql);
@@ -168,7 +168,7 @@ public class PasajerosData {
     
     public List<Pasajero> listarPorApellido(String apellido){
       List<Pasajero> pasajeros = new ArrayList<>();
-        String sql = "SELECT * FROM pasajero WHERE estado = 1 AND apellido = ?";
+        String sql = "SELECT * FROM pasajeros WHERE estado = 1 AND apellido = ?";
         
         try{
             PreparedStatement ps = con.prepareStatement(sql);

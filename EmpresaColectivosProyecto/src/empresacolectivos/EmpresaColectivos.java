@@ -13,6 +13,7 @@ import entidades.Horario;
 import entidades.Pasajero;
 import entidades.Ruta;
 import java.time.LocalTime;
+import java.util.List;
 
 /**
  *
@@ -78,6 +79,24 @@ public class EmpresaColectivos {
 //        rutaData.actualizarRuta(ruta1);
 //        horaData.actualizarhorario(hora1);
 //        pasajeroData.actualizarPasajero(pasajero1);
+
+//        -- Listar
+//        List<Ruta> rutas = rutaData.listaRutasDispo();
+//        for (Ruta r: rutas) {
+//            System.out.println(r.toString());
+//        }
+//        List<Pasajero> pasajeros = pasajeroData.listarPasajeros();
+//        for (Pasajero p: pasajeros){
+//            System.out.println(p.toString());
+//        }
+//        List<Pasajero> pasajerosNombre = pasajeroData.listarPorNombre("Agustina");
+//        for(Pasajero p:pasajerosNombre){
+//            System.out.println(p.toString());
+//        }
+        List<Ruta> rutasDestino = rutaData.listaRutasDestino("Corrientes");
+        for(Ruta r: rutasDestino){
+            System.out.println(r.toString());
+        }
     }
     
 }

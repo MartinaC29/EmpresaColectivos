@@ -5,7 +5,10 @@
 package accesodatos;
 
 import entidades.Colectivo;
+import entidades.Pasajero;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -106,6 +109,31 @@ public class ColectivoData {
         }catch (SQLException ex) {
             System.out.println("Error al acceder a la tabla colectivo, error: " + ex);
         }
+    }
+    
+    public List<Colectivo> listarColectivos(){
+        List<Colectivo> colectivos = new ArrayList<>();
+        String sql = "SELECT * FROM colectivo WHERE estado = 1";
+        
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                Colectivo colectivo = new Colectivo();
+                colectivo.setIdColectivo(rs.getInt("idPasajero"));
+                colectivo.setMatricula(rs.getString("matricula"));
+                colectivo.setMarca(rs.getString("marca"));
+                colectivo.setModelo(rs.getString("modelo"));
+                colectivo.setCapacidad(rs.getInt("capacidad"));
+                colectivo.setEstado(rs.getBoolean("estado"));
+                colectivos.add(colectivo);
+            }
+            
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Error al acceder a la tabla colectivos");
+        }
+        return colectivos;
     }
 }
 
