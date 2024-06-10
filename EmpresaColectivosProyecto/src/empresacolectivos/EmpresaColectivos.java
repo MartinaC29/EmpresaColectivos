@@ -93,10 +93,10 @@ public class EmpresaColectivos {
 //        for(Pasajero p:pasajerosNombre){
 //            System.out.println(p.toString());
 //        }
-        List<Ruta> rutasDestino = rutaData.listaRutasDestino("Corrientes");
-        for(Ruta r: rutasDestino){
-            System.out.println(r.toString());
-        }
+//        List<Ruta> rutasDestino = rutaData.listaRutasDestino("Corrientes");
+//        for(Ruta r: rutasDestino){
+//            System.out.println(r.toString());
+//        }
     }
     
 }
