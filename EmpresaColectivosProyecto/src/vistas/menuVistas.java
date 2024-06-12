@@ -11,6 +11,7 @@ import java.awt.*;
 public class menuVistas extends javax.swing.JFrame {
     Inicio inicio = new Inicio();
     Gestion gestiones = new Gestion();
+    GestionPasaje ventaPasaje = new GestionPasaje();
     Listas listas = new Listas();
     /**
      * Creates new form menuVistas
@@ -20,6 +21,7 @@ public class menuVistas extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         escritorio.addTab("inicio",inicio);
         escritorio.addTab("gestion", gestiones);
+        escritorio.addTab("ventaPasaje", ventaPasaje);
         escritorio.addTab("info",listas);
         
     }
@@ -39,8 +41,11 @@ public class menuVistas extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jbInicio = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jbGestiones = new javax.swing.JPanel();
+        jbVentaPasajes = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
+        jbSalir = new javax.swing.JButton();
+        jbGestiones = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
         escritorio = new javax.swing.JTabbedPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -60,6 +65,9 @@ public class menuVistas extends javax.swing.JFrame {
 
         jbInformacion.setBackground(new java.awt.Color(0, 51, 204));
         jbInformacion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jbInformacionMousePressed(evt);
+            }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 jbInformacionMouseReleased(evt);
             }
@@ -73,7 +81,7 @@ public class menuVistas extends javax.swing.JFrame {
         jLabel2.setPreferredSize(new java.awt.Dimension(39, 19));
         jbInformacion.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 120, -1));
 
-        jPanel1.add(jbInformacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 200, 45));
+        jPanel1.add(jbInformacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 200, 45));
 
         jbInicio.setBackground(new java.awt.Color(0, 51, 204));
         jbInicio.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -91,9 +99,37 @@ public class menuVistas extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Inicio");
         jLabel5.setPreferredSize(new java.awt.Dimension(39, 19));
-        jbInicio.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, -1, -1));
+        jbInicio.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 50, -1));
 
         jPanel1.add(jbInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 168, 200, 45));
+
+        jbVentaPasajes.setBackground(new java.awt.Color(0, 51, 204));
+        jbVentaPasajes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jbVentaPasajesMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jbVentaPasajesMouseReleased(evt);
+            }
+        });
+        jbVentaPasajes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel6.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel6.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Venta pasajes");
+        jLabel6.setPreferredSize(new java.awt.Dimension(39, 19));
+        jbVentaPasajes.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 100, -1));
+
+        jPanel1.add(jbVentaPasajes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 200, 45));
+
+        jbSalir.setText("X");
+        jbSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSalirActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jbSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 550, -1, -1));
 
         jbGestiones.setBackground(new java.awt.Color(0, 51, 204));
         jbGestiones.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -106,12 +142,12 @@ public class menuVistas extends javax.swing.JFrame {
         });
         jbGestiones.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel6.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel6.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Gestiones");
-        jLabel6.setPreferredSize(new java.awt.Dimension(39, 19));
-        jbGestiones.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 70, -1));
+        jLabel7.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel7.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Gestiones");
+        jLabel7.setPreferredSize(new java.awt.Dimension(39, 19));
+        jbGestiones.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 70, -1));
 
         jPanel1.add(jbGestiones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 200, 45));
 
@@ -126,22 +162,40 @@ public class menuVistas extends javax.swing.JFrame {
         jbInicio.setBackground(new Color(0,51,204));
     }//GEN-LAST:event_jbInicioMouseReleased
 
-    private void jbGestionesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbGestionesMouseReleased
-        escritorio.setSelectedIndex(1);
-        jbGestiones.setBackground(new Color(0,51,204));
-    }//GEN-LAST:event_jbGestionesMouseReleased
+    private void jbVentaPasajesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbVentaPasajesMouseReleased
+        escritorio.setSelectedIndex(2);
+        jbVentaPasajes.setBackground(new Color(0,51,204));
+    }//GEN-LAST:event_jbVentaPasajesMouseReleased
 
     private void jbInformacionMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbInformacionMouseReleased
-        escritorio.setSelectedIndex(2);
+        escritorio.setSelectedIndex(3);
+        jbInformacion.setBackground(new Color(0,51,204));
     }//GEN-LAST:event_jbInformacionMouseReleased
 
     private void jbInicioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbInicioMousePressed
         jbInicio.setBackground(new Color(0,102,204));
     }//GEN-LAST:event_jbInicioMousePressed
 
+    private void jbVentaPasajesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbVentaPasajesMousePressed
+        jbVentaPasajes.setBackground(new Color(0,102,204));
+    }//GEN-LAST:event_jbVentaPasajesMousePressed
+
+    private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jbSalirActionPerformed
+
     private void jbGestionesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbGestionesMousePressed
         jbGestiones.setBackground(new Color(0,102,204));
     }//GEN-LAST:event_jbGestionesMousePressed
+
+    private void jbGestionesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbGestionesMouseReleased
+       jbGestiones.setBackground(new Color(0,51,204));
+       escritorio.setSelectedIndex(1);
+    }//GEN-LAST:event_jbGestionesMouseReleased
+
+    private void jbInformacionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbInformacionMousePressed
+        jbInformacion.setBackground(new Color(0,102,204));
+    }//GEN-LAST:event_jbInformacionMousePressed
 
     /**
      * @param args the command line arguments
@@ -184,9 +238,12 @@ public class menuVistas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jbGestiones;
     private javax.swing.JPanel jbInformacion;
     private javax.swing.JPanel jbInicio;
+    private javax.swing.JButton jbSalir;
+    private javax.swing.JPanel jbVentaPasajes;
     // End of variables declaration//GEN-END:variables
 }

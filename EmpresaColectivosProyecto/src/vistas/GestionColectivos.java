@@ -49,6 +49,7 @@ public class GestionColectivos extends javax.swing.JPanel {
         jbEliminar = new javax.swing.JButton();
         jbBuscar = new javax.swing.JButton();
         jlCapacidad = new javax.swing.JLabel();
+        jbLimpiar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -57,6 +58,12 @@ public class GestionColectivos extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(102, 102, 102));
         jLabel1.setText("Gestion de colectivos");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 40, -1, -1));
+
+        jtMatricula.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtMatriculaKeyReleased(evt);
+            }
+        });
         add(jtMatricula, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 100, 175, -1));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
@@ -79,6 +86,12 @@ public class GestionColectivos extends javax.swing.JPanel {
         jLabel5.setText("Capacidad:");
         add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 280, -1, -1));
         add(jtModelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 220, 175, -1));
+
+        jtCapacidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtCapacidadKeyReleased(evt);
+            }
+        });
         add(jtCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 280, 175, -1));
         add(jtMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 160, 175, -1));
 
@@ -91,6 +104,11 @@ public class GestionColectivos extends javax.swing.JPanel {
         add(jbAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 340, -1, -1));
 
         jbEliminar.setText("Eliminar");
+        jbEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEliminarActionPerformed(evt);
+            }
+        });
         add(jbEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 340, -1, -1));
 
         jbBuscar.setText("Buscar");
@@ -105,6 +123,14 @@ public class GestionColectivos extends javax.swing.JPanel {
         jlCapacidad.setForeground(new java.awt.Color(255, 0, 51));
         jlCapacidad.setText("Capacidad invalida");
         add(jlCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 310, 170, -1));
+
+        jbLimpiar.setText("Limpiar campos");
+        jbLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbLimpiarActionPerformed(evt);
+            }
+        });
+        add(jbLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 380, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAgregarActionPerformed
@@ -116,6 +142,7 @@ public class GestionColectivos extends javax.swing.JPanel {
             // Validacion capacidad
             if (validarEntero(jtCapacidad.getText())) {
                 capacidad = Integer.parseInt(jtCapacidad.getText());
+                jlCapacidad.setVisible(false);
             }else{
                 jlCapacidad.setVisible(true);
             }
@@ -150,9 +177,33 @@ public class GestionColectivos extends javax.swing.JPanel {
         if (colectivoActual!=null) {
             jtMarca.setText(colectivoActual.getMarca());
             jtModelo.setText(colectivoActual.getModelo());
-            jtCapacidad.setText(colectivoActual.getCapacidad());
+            jtCapacidad.setText(colectivoActual.getCapacidad()+"");
+            jbEliminar.setEnabled(true);
+            System.out.println("Colectivo: " + colectivoActual.toString());
         }
     }//GEN-LAST:event_jbBuscarActionPerformed
+
+    private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
+        if (colectivoActual != null) {
+            coleData.eliminarColectivo(colectivoActual.getIdColectivo());
+            colectivoActual = null;
+            limpiarCampos();
+            jbEliminar.setEnabled(false);
+        }
+    }//GEN-LAST:event_jbEliminarActionPerformed
+
+    private void jtMatriculaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtMatriculaKeyReleased
+        jbEliminar.setEnabled(false);
+    }//GEN-LAST:event_jtMatriculaKeyReleased
+
+    private void jtCapacidadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtCapacidadKeyReleased
+        jlCapacidad.setVisible(false);
+    }//GEN-LAST:event_jtCapacidadKeyReleased
+
+    private void jbLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLimpiarActionPerformed
+        limpiarCampos();
+        colectivoActual = null;
+    }//GEN-LAST:event_jbLimpiarActionPerformed
     
     private boolean validarEntero(String nro){
         Pattern patron=Pattern.compile("^[0-9]+$");
@@ -176,6 +227,7 @@ public class GestionColectivos extends javax.swing.JPanel {
     private javax.swing.JButton jbAgregar;
     private javax.swing.JButton jbBuscar;
     private javax.swing.JButton jbEliminar;
+    private javax.swing.JButton jbLimpiar;
     private javax.swing.JLabel jlCapacidad;
     private javax.swing.JTextField jtCapacidad;
     private javax.swing.JTextField jtMarca;

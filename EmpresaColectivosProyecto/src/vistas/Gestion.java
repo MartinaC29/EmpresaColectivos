@@ -12,8 +12,8 @@ public class Gestion extends javax.swing.JPanel {
     GestionPasajeros gestionPasajeros = new GestionPasajeros();
     GestionColectivos gestionColectivos = new GestionColectivos();
     GestionRutaHorario gestionRutaHorario = new GestionRutaHorario();
-    GestionPasaje gestionPasaje = new GestionPasaje();
-    
+    GestionColectivoRuta gestionColectivoRuta = new GestionColectivoRuta();
+    boolean gestionesCreadas;
     /**
      * Creates new form Gestion
      */
@@ -21,8 +21,10 @@ public class Gestion extends javax.swing.JPanel {
         initComponents();
         gestionEscritorio.addTab("Pasajeros", gestionPasajeros);
         gestionEscritorio.addTab("Colectivos", gestionColectivos);
-        gestionEscritorio.addTab("RutaHorario", gestionRutaHorario);
-        gestionEscritorio.addTab("Pasajes",gestionPasaje);
+        gestionEscritorio.addTab("Ruta y Horario", gestionRutaHorario);
+        gestionEscritorio.addTab("Asignar colectivo a ruta", gestionColectivoRuta);
+        gestionesCreadas = true;
+        
     }
 
     /**
@@ -36,6 +38,12 @@ public class Gestion extends javax.swing.JPanel {
 
         gestionEscritorio = new javax.swing.JTabbedPane();
 
+        gestionEscritorio.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                gestionEscritorioStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -47,6 +55,14 @@ public class Gestion extends javax.swing.JPanel {
             .addComponent(gestionEscritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void gestionEscritorioStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_gestionEscritorioStateChanged
+        if (gestionesCreadas) {
+            if (gestionEscritorio.getSelectedIndex() == 3) { 
+                gestionColectivoRuta.refrescarComboBox();
+            } 
+        }  
+    }//GEN-LAST:event_gestionEscritorioStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
