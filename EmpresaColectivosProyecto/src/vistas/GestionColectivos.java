@@ -4,17 +4,27 @@
  */
 package vistas;
 
+import accesodatos.ColectivoData;
+import entidades.Colectivo;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author pablo
  */
 public class GestionColectivos extends javax.swing.JPanel {
-
+    ColectivoData coleData = new ColectivoData();
+    Colectivo colectivoActual = null;
     /**
      * Creates new form GestionColectivos
      */
     public GestionColectivos() {
         initComponents();
+        jlCapacidad.setVisible(false);
+        jbEliminar.setEnabled(false);
+        
     }
 
     /**
@@ -26,19 +36,150 @@ public class GestionColectivos extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        jLabel1 = new javax.swing.JLabel();
+        jtMatricula = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jtModelo = new javax.swing.JTextField();
+        jtCapacidad = new javax.swing.JTextField();
+        jtMarca = new javax.swing.JTextField();
+        jbAgregar = new javax.swing.JButton();
+        jbEliminar = new javax.swing.JButton();
+        jbBuscar = new javax.swing.JButton();
+        jlCapacidad = new javax.swing.JLabel();
+
+        setBackground(new java.awt.Color(255, 255, 255));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Source Serif Pro Black", 0, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel1.setText("Gestion de colectivos");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 40, -1, -1));
+        add(jtMatricula, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 100, 175, -1));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel2.setText("Marca:");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 160, -1, -1));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel3.setText("Matricula:");
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 100, -1, -1));
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel4.setText("Modelo:");
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 220, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel5.setText("Capacidad:");
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 280, -1, -1));
+        add(jtModelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 220, 175, -1));
+        add(jtCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 280, 175, -1));
+        add(jtMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 160, 175, -1));
+
+        jbAgregar.setText("Añadir");
+        jbAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbAgregarActionPerformed(evt);
+            }
+        });
+        add(jbAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 340, -1, -1));
+
+        jbEliminar.setText("Eliminar");
+        add(jbEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 340, -1, -1));
+
+        jbBuscar.setText("Buscar");
+        jbBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbBuscarActionPerformed(evt);
+            }
+        });
+        add(jbBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 100, -1, -1));
+
+        jlCapacidad.setBackground(new java.awt.Color(0, 0, 0));
+        jlCapacidad.setForeground(new java.awt.Color(255, 0, 51));
+        jlCapacidad.setText("Capacidad invalida");
+        add(jlCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 310, 170, -1));
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jbAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAgregarActionPerformed
+        int capacidad = 0;
+        
+        if (jtMatricula.getText().isEmpty() || jtMarca.getText().isEmpty() || jtModelo.getText().isEmpty() || jtCapacidad.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Hay campos sin completar");
+        }else{
+            // Validacion capacidad
+            if (validarEntero(jtCapacidad.getText())) {
+                capacidad = Integer.parseInt(jtCapacidad.getText());
+            }else{
+                jlCapacidad.setVisible(true);
+            }
+            
+            String matricula = jtMatricula.getText();
+            String marca = jtMarca.getText();
+            String modelo = jtModelo.getText();
+            
+            if (!jlCapacidad.isVisible()) {
+                if (colectivoActual == null) {
+                    colectivoActual = new Colectivo(matricula,marca,modelo,capacidad,true);
+                    coleData.guardarColectivo(colectivoActual);
+                }else{
+                    colectivoActual.setMatricula(matricula);
+                    colectivoActual.setMarca(marca);
+                    colectivoActual.setModelo(modelo);
+                    colectivoActual.setCapacidad(capacidad);
+                    coleData.actualizarColectivo(colectivoActual);
+                }
+                limpiarCampos();
+            }
+            
+        }
+    }//GEN-LAST:event_jbAgregarActionPerformed
+
+    private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
+        String matricula;
+        
+        matricula = jtMatricula.getText();
+        colectivoActual = coleData.buscarColectivoPorMatricula(matricula);
+        
+        if (colectivoActual!=null) {
+            jtMarca.setText(colectivoActual.getMarca());
+            jtModelo.setText(colectivoActual.getModelo());
+            jtCapacidad.setText(colectivoActual.getCapacidad());
+        }
+    }//GEN-LAST:event_jbBuscarActionPerformed
+    
+    private boolean validarEntero(String nro){
+        Pattern patron=Pattern.compile("^[0-9]+$");
+        Matcher m=patron.matcher(nro);
+        return m.matches();
+    }
+    
+    public void limpiarCampos(){
+        jtMatricula.setText("");
+        jtMarca.setText("");
+        jtModelo.setText("");
+        jtCapacidad.setText("");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JButton jbAgregar;
+    private javax.swing.JButton jbBuscar;
+    private javax.swing.JButton jbEliminar;
+    private javax.swing.JLabel jlCapacidad;
+    private javax.swing.JTextField jtCapacidad;
+    private javax.swing.JTextField jtMarca;
+    private javax.swing.JTextField jtMatricula;
+    private javax.swing.JTextField jtModelo;
     // End of variables declaration//GEN-END:variables
 }

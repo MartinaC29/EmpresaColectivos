@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package vistas;
-
+import java.awt.*;
 /**
  *
  * @author pablo
@@ -11,6 +11,7 @@ package vistas;
 public class menuVistas extends javax.swing.JFrame {
     Inicio inicio = new Inicio();
     Gestion gestiones = new Gestion();
+    Listas listas = new Listas();
     /**
      * Creates new form menuVistas
      */
@@ -18,7 +19,9 @@ public class menuVistas extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         escritorio.addTab("inicio",inicio);
-        escritorio.addTab("geation", gestiones);
+        escritorio.addTab("gestion", gestiones);
+        escritorio.addTab("info",listas);
+        
     }
 
     /**
@@ -55,7 +58,7 @@ public class menuVistas extends javax.swing.JFrame {
         jLabel1.setText("COLECTIVOS SL");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, -1, -1));
 
-        jbInformacion.setBackground(new java.awt.Color(51, 102, 255));
+        jbInformacion.setBackground(new java.awt.Color(0, 51, 204));
         jbInformacion.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 jbInformacionMouseReleased(evt);
@@ -72,8 +75,11 @@ public class menuVistas extends javax.swing.JFrame {
 
         jPanel1.add(jbInformacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 200, 45));
 
-        jbInicio.setBackground(new java.awt.Color(51, 102, 255));
+        jbInicio.setBackground(new java.awt.Color(0, 51, 204));
         jbInicio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jbInicioMousePressed(evt);
+            }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 jbInicioMouseReleased(evt);
             }
@@ -89,8 +95,11 @@ public class menuVistas extends javax.swing.JFrame {
 
         jPanel1.add(jbInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 168, 200, 45));
 
-        jbGestiones.setBackground(new java.awt.Color(51, 102, 255));
+        jbGestiones.setBackground(new java.awt.Color(0, 51, 204));
         jbGestiones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jbGestionesMousePressed(evt);
+            }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 jbGestionesMouseReleased(evt);
             }
@@ -114,15 +123,25 @@ public class menuVistas extends javax.swing.JFrame {
 
     private void jbInicioMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbInicioMouseReleased
         escritorio.setSelectedIndex(0);
+        jbInicio.setBackground(new Color(0,51,204));
     }//GEN-LAST:event_jbInicioMouseReleased
 
     private void jbGestionesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbGestionesMouseReleased
         escritorio.setSelectedIndex(1);
+        jbGestiones.setBackground(new Color(0,51,204));
     }//GEN-LAST:event_jbGestionesMouseReleased
 
     private void jbInformacionMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbInformacionMouseReleased
         escritorio.setSelectedIndex(2);
     }//GEN-LAST:event_jbInformacionMouseReleased
+
+    private void jbInicioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbInicioMousePressed
+        jbInicio.setBackground(new Color(0,102,204));
+    }//GEN-LAST:event_jbInicioMousePressed
+
+    private void jbGestionesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbGestionesMousePressed
+        jbGestiones.setBackground(new Color(0,102,204));
+    }//GEN-LAST:event_jbGestionesMousePressed
 
     /**
      * @param args the command line arguments

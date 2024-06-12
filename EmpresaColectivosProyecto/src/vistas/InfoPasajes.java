@@ -8,21 +8,13 @@ package vistas;
  *
  * @author pablo
  */
-public class Listas extends javax.swing.JPanel {
-    InfoRutaHorario rutaHorario = new InfoRutaHorario();
-    InfoPasajes pasajes = new InfoPasajes();
-    InfoColectivos colectivos = new InfoColectivos();
-    InfoPasajeros pasajeros = new InfoPasajeros();
+public class InfoPasajes extends javax.swing.JPanel {
+
     /**
-     * Creates new form Listas
+     * Creates new form infoPasajes
      */
-    public Listas() {
+    public InfoPasajes() {
         initComponents();
-        infoEscritorio.addTab("Ruta y Horarios", rutaHorario);
-        infoEscritorio.addTab("Colectivos", colectivos);
-        infoEscritorio.addTab("Pasajeros", pasajeros);
-        infoEscritorio.addTab("Pasajes", pasajes);
-        
     }
 
     /**
@@ -34,22 +26,19 @@ public class Listas extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        infoEscritorio = new javax.swing.JTabbedPane();
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(infoEscritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE)
+            .addGap(0, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(infoEscritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE)
+            .addGap(0, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTabbedPane infoEscritorio;
     // End of variables declaration//GEN-END:variables
 }

@@ -72,6 +72,33 @@ public class ColectivoData {
         return colectivo;
     }
     
+    public Colectivo buscarColectivoPorMatricula(String matricula){
+        Colectivo colectivo = null;
+        
+        String sql = "SELECT `idColectivo`, `marca`, `modelo`, `capacidad` FROM `colectivo` WHERE matricula = ? AND estado = 1";
+        
+        try {
+           PreparedStatement ps = con.prepareStatement(sql);
+           ps.setString(1, matricula);
+           
+           ResultSet rs = ps.executeQuery();
+           
+            if (rs.next()) {
+                colectivo = new Colectivo();
+                colectivo.setIdColectivo(rs.getInt("idColectivo"));
+                colectivo.setMatricula(matricula);
+                colectivo.setMarca(rs.getString("marca"));
+                colectivo.setModelo(rs.getString("modelo"));
+                colectivo.setCapacidad(rs.getInt("capacidad"));
+                colectivo.setEstado(true);
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println("Error al acceder a la tabla colectivo, error: " + ex);
+        }
+        return colectivo;
+    }
+    
     public void eliminarColectivo(int id){
         String sql = "UPDATE colectivo SET estado = 0 WHERE idColectivo = ? ";
         try{
