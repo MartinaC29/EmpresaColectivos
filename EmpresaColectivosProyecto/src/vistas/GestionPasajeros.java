@@ -231,13 +231,6 @@ public class GestionPasajeros extends javax.swing.JPanel {
                 apellidoInvalido.setVisible(true);
             }
 
-            //validar Correo
-            if(validarTexto(jtCorreo.getText())){
-                correo = jtCorreo.getText();
-            }else{
-                correoInvalido.setVisible(true);
-            }
-
             //validar telefono
             if(validarEntero(jtTel.getText())){
                 tel = Integer.parseInt(jtTel.getText());

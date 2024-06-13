@@ -51,7 +51,7 @@ public class InfoRutaHorario extends javax.swing.JPanel {
                 modelo.addRow(new Object[]{r.getOrigen(),r.getDestino(),r.getDuracionEstimada()});
             }
         }
-
+        cargarRutas();
         
     }
     
@@ -238,7 +238,12 @@ public class InfoRutaHorario extends javax.swing.JPanel {
 
         jcbRutas.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.gray, java.awt.Color.gray), "Rutas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial Rounded MT Bold", 0, 12))); // NOI18N
         jcbRutas.setCursor(new java.awt.Cursor(java.awt.Cursor.N_RESIZE_CURSOR));
-        add(jcbRutas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 510, 180, 40));
+        jcbRutas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbRutasActionPerformed(evt);
+            }
+        });
+        add(jcbRutas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 510, 210, 40));
 
         jTHorarios.setBackground(new java.awt.Color(128, 185, 203));
         jTHorarios.setModel(new javax.swing.table.DefaultTableModel(
@@ -270,7 +275,7 @@ public class InfoRutaHorario extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jtBRutaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtBRutaKeyReleased
-        cargaDeRutas();
+        
     }//GEN-LAST:event_jtBRutaKeyReleased
 
     private void jrbOrigenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbOrigenActionPerformed
@@ -299,13 +304,13 @@ public class InfoRutaHorario extends javax.swing.JPanel {
         borrarFilasHorario(); 
         if (jtHSalida.getText() != null) {
             if (validarHora(jtHSalida.getText())) {
-                System.out.println("hola");
+                
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
                 String hSalida = jtHSalida.getText();
                 LocalTime hora = LocalTime.parse(hSalida, formatter);
                 this.listaHSalida = hrData.listaHorarioSalida(hora);
                 
-//                String rutas = jcbRutas.getSelectedItem().toString();
+
              
                 for (Horario hr : listaHSalida) {
                     if (!listaHSalida.isEmpty()) {
@@ -314,11 +319,7 @@ public class InfoRutaHorario extends javax.swing.JPanel {
                     }
                 }
 
-//                for(Horario ruta: listaHRutas){
-//                    if(rutas != null){
-//                        modelo2.addRow(new Object[]{ruta.getRuta(), ruta.getHoraSalida(), ruta.getHoraLlegada()});
-//                    }
-//                }
+
             }else{
                 JOptionPane.showMessageDialog(null,"Hora invalida");
             }
@@ -345,6 +346,23 @@ public class InfoRutaHorario extends javax.swing.JPanel {
     private void jtHSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtHSalidaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtHSalidaActionPerformed
+
+    private void jcbRutasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRutasActionPerformed
+        borrarFilasHorario();
+        String rutaSeleccionada = jcbRutas.getSelectedItem().toString();
+        List<Ruta> rutas = rutData.listaRutasDispo();
+        for (Ruta r:rutas){
+            String ru = r.getOrigen() + " - " + r.getDestino();
+            if (ru.equals(rutaSeleccionada)) {
+                List<Horario> horarios = hrData.listaHorarioRutas(r);
+                for(Horario h: horarios){
+                    modelo2.addRow(new Object[]{h.getRuta(),h.getHoraSalida(),h.getHoraLlegada()});
+                }
+            }
+        }
+        
+        
+    }//GEN-LAST:event_jcbRutasActionPerformed
     
     private boolean validarHora(String string){
         Pattern patron = Pattern.compile("^(?:[01]\\d|2[0-3]):[0-5]\\d$");
