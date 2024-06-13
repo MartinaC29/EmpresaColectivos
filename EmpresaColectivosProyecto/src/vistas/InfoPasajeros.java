@@ -3,19 +3,70 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package vistas;
-
+import entidades.Pasajero;
+import accesodatos.PasajerosData;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author pablo
  */
 public class InfoPasajeros extends javax.swing.JPanel {
+    private List<Pasajero> listaPasajeros;
+    private List<Pasajero> listaNombre;
+    private List<Pasajero> listaApellido;
+    private PasajerosData pasajData;
+    
+    private DefaultTableModel modelo;
 
     /**
      * Creates new form infoPasajeros
      */
     public InfoPasajeros() {
         initComponents();
+        pasajData = new PasajerosData();
+        this.modelo = (DefaultTableModel) jtPasajeros.getModel();
+        jrbPasajeros.setSelected(false);
+        jrbNombre.setSelected(false);
+        jrbApellido.setSelected(false);
     }
+    
+    
+    private void cargaNombres(){
+        String nombre = jtBuscar.getText();
+        listaNombre = pasajData.listarPorNombre(nombre);
+        
+        for(Pasajero pas: listaNombre){
+            if(pas.getNombre().toLowerCase().equals(nombre)){
+                modelo.addRow(new Object[]{pas.getDni(),pas.getNombre(),pas.getApellido(),pas.getTel()});
+            }
+        }
+    }
+    
+    private void cargaApellidos(){
+        String apellido = jtBuscar.getText();
+        listaApellido = pasajData.listarPorApellido(apellido);
+        
+        for(Pasajero pas: listaApellido){
+            if(pas.getApellido().toLowerCase().equals(apellido)){
+                modelo.addRow(new Object[]{pas.getDni(),pas.getNombre(),pas.getApellido(),pas.getTel()});
+            }
+        }
+    }
+    
+    private void removerFilaTabla(){
+        int indice = modelo.getRowCount() -1;
+        
+        for(int i = indice; i>=0; i--){
+            modelo.removeRow(i);
+        }
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -26,19 +77,143 @@ public class InfoPasajeros extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jtBuscar = new javax.swing.JTextField();
+        jrbPasajeros = new javax.swing.JRadioButton();
+        jrbNombre = new javax.swing.JRadioButton();
+        jrbApellido = new javax.swing.JRadioButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtPasajeros = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
+        jLabel1.setText("PASAJEROS");
+
+        jrbPasajeros.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        jrbPasajeros.setText("Pasajeros");
+        jrbPasajeros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrbPasajerosActionPerformed(evt);
+            }
+        });
+
+        jrbNombre.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        jrbNombre.setText("Nombre");
+        jrbNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrbNombreActionPerformed(evt);
+            }
+        });
+
+        jrbApellido.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        jrbApellido.setText("Apellido");
+        jrbApellido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrbApellidoActionPerformed(evt);
+            }
+        });
+
+        jtPasajeros.setBackground(new java.awt.Color(123, 166, 192));
+        jtPasajeros.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "DNI", "Nombre", "Apellido", "Teléfono"
+            }
+        ));
+        jScrollPane1.setViewportView(jtPasajeros);
+
+        jLabel2.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 16)); // NOI18N
+        jLabel2.setText("Buscar Pasajero:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(jrbNombre)
+                                .addGap(20, 20, 20)
+                                .addComponent(jrbApellido)
+                                .addGap(20, 20, 20)
+                                .addComponent(jrbPasajeros)))
+                        .addGap(31, 31, 31))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(179, 179, 179)
+                .addComponent(jLabel1)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jLabel1)
+                .addGap(35, 35, 35)
+                .addComponent(jLabel2)
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jrbNombre)
+                    .addComponent(jrbApellido)
+                    .addComponent(jtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jrbPasajeros))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(39, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jrbPasajerosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbPasajerosActionPerformed
+        // TODO add your handling code here:
+        listaPasajeros = pasajData.listarPasajeros();
+        removerFilaTabla();
+        jrbNombre.setSelected(false);
+        jrbApellido.setSelected(false);
+        for(Pasajero pas: listaPasajeros){
+             modelo.addRow(new Object[]{pas.getDni(),pas.getNombre(),pas.getApellido(),pas.getTel()});
+        }   
+    }//GEN-LAST:event_jrbPasajerosActionPerformed
+
+    private void jrbNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbNombreActionPerformed
+        // TODO add your handling code here:
+        removerFilaTabla();
+        jrbPasajeros.setSelected(false);
+        jrbApellido.setSelected(false);
+        cargaNombres();
+        
+        
+    }//GEN-LAST:event_jrbNombreActionPerformed
+
+    private void jrbApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbApellidoActionPerformed
+        // TODO add your handling code here:
+        removerFilaTabla();
+        jrbPasajeros.setSelected(false);
+        jrbNombre.setSelected(false);
+        cargaApellidos();
+    }//GEN-LAST:event_jrbApellidoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JRadioButton jrbApellido;
+    private javax.swing.JRadioButton jrbNombre;
+    private javax.swing.JRadioButton jrbPasajeros;
+    private javax.swing.JTextField jtBuscar;
+    private javax.swing.JTable jtPasajeros;
     // End of variables declaration//GEN-END:variables
 }
