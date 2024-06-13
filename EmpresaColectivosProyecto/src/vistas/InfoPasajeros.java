@@ -33,11 +33,19 @@ public class InfoPasajeros extends javax.swing.JPanel {
         jrbPasajeros.setSelected(false);
         jrbNombre.setSelected(false);
         jrbApellido.setSelected(false);
+        jrbPasajeros.setSelected(true);
+        if(jrbPasajeros.isSelected()){
+            listaPasajeros = pasajData.listarPasajeros();
+            for(Pasajero p:listaPasajeros){
+                modelo.addRow(new Object[]{p.getDni(),p.getNombre(),p.getApellido(),p.getTel()});
+            }
+        }
     }
     
     
     private void cargaNombres(){
-        String nombre = jtBuscar.getText();
+        removerFilaTabla();
+        String nombre = jtBuscar.getText().toLowerCase();
         listaNombre = pasajData.listarPorNombre(nombre);
         
         for(Pasajero pas: listaNombre){
@@ -48,7 +56,8 @@ public class InfoPasajeros extends javax.swing.JPanel {
     }
     
     private void cargaApellidos(){
-        String apellido = jtBuscar.getText();
+        removerFilaTabla();
+        String apellido = jtBuscar.getText().toLowerCase();
         listaApellido = pasajData.listarPorApellido(apellido);
         
         for(Pasajero pas: listaApellido){
@@ -77,7 +86,6 @@ public class InfoPasajeros extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jtBuscar = new javax.swing.JTextField();
         jrbPasajeros = new javax.swing.JRadioButton();
         jrbNombre = new javax.swing.JRadioButton();
@@ -85,9 +93,22 @@ public class InfoPasajeros extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jtPasajeros = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
-        jLabel1.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
-        jLabel1.setText("PASAJEROS");
+        setBackground(new java.awt.Color(255, 255, 255));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtBuscarActionPerformed(evt);
+            }
+        });
+        jtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtBuscarKeyReleased(evt);
+            }
+        });
+        add(jtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 137, 222, -1));
 
         jrbPasajeros.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jrbPasajeros.setText("Pasajeros");
@@ -96,6 +117,7 @@ public class InfoPasajeros extends javax.swing.JPanel {
                 jrbPasajerosActionPerformed(evt);
             }
         });
+        add(jrbPasajeros, new org.netbeans.lib.awtextra.AbsoluteConstraints(487, 139, -1, -1));
 
         jrbNombre.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jrbNombre.setText("Nombre");
@@ -104,6 +126,7 @@ public class InfoPasajeros extends javax.swing.JPanel {
                 jrbNombreActionPerformed(evt);
             }
         });
+        add(jrbNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(282, 139, -1, -1));
 
         jrbApellido.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jrbApellido.setText("Apellido");
@@ -112,14 +135,12 @@ public class InfoPasajeros extends javax.swing.JPanel {
                 jrbApellidoActionPerformed(evt);
             }
         });
+        add(jrbApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(384, 139, -1, -1));
 
         jtPasajeros.setBackground(new java.awt.Color(123, 166, 192));
         jtPasajeros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "DNI", "Nombre", "Apellido", "Teléfono"
@@ -127,53 +148,16 @@ public class InfoPasajeros extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(jtPasajeros);
 
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 175, 543, 243));
+
         jLabel2.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 16)); // NOI18N
         jLabel2.setText("Buscar Pasajero:");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 107, 148, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(20, 20, 20)
-                                .addComponent(jrbNombre)
-                                .addGap(20, 20, 20)
-                                .addComponent(jrbApellido)
-                                .addGap(20, 20, 20)
-                                .addComponent(jrbPasajeros)))
-                        .addGap(31, 31, 31))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(179, 179, 179)
-                .addComponent(jLabel1)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel1)
-                .addGap(35, 35, 35)
-                .addComponent(jLabel2)
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jrbNombre)
-                    .addComponent(jrbApellido)
-                    .addComponent(jtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jrbPasajeros))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(39, Short.MAX_VALUE))
-        );
+        jLabel3.setFont(new java.awt.Font("Source Serif Pro Black", 0, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel3.setText("Gestion Pasajeros");
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jrbPasajerosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbPasajerosActionPerformed
@@ -205,10 +189,23 @@ public class InfoPasajeros extends javax.swing.JPanel {
         cargaApellidos();
     }//GEN-LAST:event_jrbApellidoActionPerformed
 
+    private void jtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtBuscarActionPerformed
+
+    private void jtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtBuscarKeyReleased
+        if (jrbNombre.isSelected()) {
+            cargaNombres();
+        }
+        if (jrbApellido.isSelected()) {
+            cargaApellidos();
+        }
+    }//GEN-LAST:event_jtBuscarKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JRadioButton jrbApellido;
     private javax.swing.JRadioButton jrbNombre;

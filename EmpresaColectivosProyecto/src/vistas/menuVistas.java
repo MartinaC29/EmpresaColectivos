@@ -63,7 +63,7 @@ public class menuVistas extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("COLECTIVOS SL");
-        jpMenu.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, -1, -1));
+        jpMenu.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, -1, -1));
 
         jbInformacion.setBackground(new java.awt.Color(0, 51, 204));
         jbInformacion.addMouseListener(new java.awt.event.MouseAdapter() {

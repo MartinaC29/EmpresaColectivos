@@ -35,12 +35,10 @@ public class RutaData {
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             while(rs.next()){
-                ruta.setIdRuta(rs.getInt(1));
                 JOptionPane.showMessageDialog(null, "Ruta guardada");
             }
-            ps.close();
         }catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,"Error al acceder a la tabla ruta");
+            JOptionPane.showMessageDialog(null,"Error al acceder a la tabla ruta"+ex);
         }   
     }
     

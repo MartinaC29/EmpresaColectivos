@@ -57,10 +57,8 @@ public class GestionPasaje extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jbComprar = new javax.swing.JButton();
         jtOrigen = new javax.swing.JTextField();
@@ -75,14 +73,11 @@ public class GestionPasaje extends javax.swing.JPanel {
         jdFecha = new com.toedter.calendar.JDateChooser();
         jLabel10 = new javax.swing.JLabel();
         jbFechaValida = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel1.setFont(new java.awt.Font("Source Serif Pro Black", 0, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel1.setText("Venta de pasajes");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 150, -1));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(102, 102, 102));
@@ -93,11 +88,6 @@ public class GestionPasaje extends javax.swing.JPanel {
         jLabel5.setForeground(new java.awt.Color(102, 102, 102));
         jLabel5.setText("Elija el pasajero:");
         add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, -1, -1));
-
-        jLabel6.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel6.setText("Elija una ruta:");
-        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(102, 102, 102));
@@ -110,7 +100,7 @@ public class GestionPasaje extends javax.swing.JPanel {
                 jbComprarActionPerformed(evt);
             }
         });
-        add(jbComprar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 390, -1, -1));
+        add(jbComprar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 370, -1, -1));
 
         jtOrigen.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -122,11 +112,11 @@ public class GestionPasaje extends javax.swing.JPanel {
         jLabel9.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(102, 102, 102));
         jLabel9.setText("Ingrese el origen:");
-        add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, -1));
+        add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
 
         add(jcbDestino, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 140, 240, -1));
 
-        add(jcbHorarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 210, 240, -1));
+        add(jcbHorarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 210, 260, -1));
 
         jcbPasajeros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -138,13 +128,13 @@ public class GestionPasaje extends javax.swing.JPanel {
         jLabel8.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(102, 102, 102));
         jLabel8.setText("Fecha:");
-        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 210, -1, -1));
+        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 190, -1, -1));
 
         add(jcbColectivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, 260, -1));
 
         jbColectivoValido.setForeground(new java.awt.Color(255, 0, 51));
         jbColectivoValido.setText("No quedan colectivos disponibles");
-        add(jbColectivoValido, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 270, 240, -1));
+        add(jbColectivoValido, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 280, 240, -1));
 
         jbRutaValida.setForeground(new java.awt.Color(255, 0, 51));
         jbRutaValida.setText("Debe seleccionar una ruta valida");
@@ -155,7 +145,7 @@ public class GestionPasaje extends javax.swing.JPanel {
                 jdFechaPropertyChange(evt);
             }
         });
-        add(jdFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 210, -1, -1));
+        add(jdFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 210, -1, -1));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(102, 102, 102));
@@ -164,7 +154,17 @@ public class GestionPasaje extends javax.swing.JPanel {
 
         jbFechaValida.setForeground(new java.awt.Color(255, 0, 51));
         jbFechaValida.setText("Fecha invalida");
-        add(jbFechaValida, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 220, 80, -1));
+        add(jbFechaValida, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 210, 80, -1));
+
+        jLabel11.setFont(new java.awt.Font("Source Serif Pro Black", 0, 18)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel11.setText("Elija una ruta");
+        add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, -1, -1));
+
+        jLabel12.setFont(new java.awt.Font("Source Serif Pro Black", 0, 24)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel12.setText("Venta de pasajes");
+        add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbComprarActionPerformed
@@ -309,11 +309,11 @@ public class GestionPasaje extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;

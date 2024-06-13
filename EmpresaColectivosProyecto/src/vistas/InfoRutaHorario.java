@@ -42,10 +42,15 @@ public class InfoRutaHorario extends javax.swing.JPanel {
         this.hrData = new HorarioData();
         this.modelo = (DefaultTableModel) jTRutas.getModel();
         this.modelo2 = (DefaultTableModel) jTHorarios.getModel();
-        jrbRutas.setSelected(false);
+        jrbRutas.setSelected(true);
         jrbOrigen.setSelected(false);
         jrbDestino.setSelected(false);
-        
+        if(jrbRutas.isSelected()){
+            List<Ruta> rutas = rutData.listaRutasDispo();
+            for(Ruta r:rutas){
+                modelo.addRow(new Object[]{r.getOrigen(),r.getDestino(),r.getDuracionEstimada()});
+            }
+        }
 
         
     }
@@ -89,28 +94,54 @@ public class InfoRutaHorario extends javax.swing.JPanel {
          }
     }
     
-    public void llenarTabla(){
-        String buscar = jtBRuta.getText().toLowerCase();
-        
+//    public void llenarTabla(){
+//        String buscar = jtBRuta.getText().toLowerCase();
+//        
+//        borrarFilasRuta();
+//        
+//        for(Ruta r: listaRutas){
+//            String origen = r.getOrigen().toLowerCase();
+//            String destino = r.getDestino().toLowerCase();
+//            
+//            if (jrbRutas.isSelected() && (origen.contains(buscar) || destino.contains(buscar))) {
+//                modelo.addRow(new Object[]{r.getOrigen(), r.getDestino(), r.getDuracionEstimada()});
+//            } else if (jrbOrigen.isSelected() && origen.contains(buscar)) {
+//                modelo.addRow(new Object[]{r.getOrigen(), r.getDestino(), r.getDuracionEstimada()});
+//            } else if (jrbDestino.isSelected() && destino.contains(buscar)) {
+//                modelo.addRow(new Object[]{r.getOrigen(), r.getDestino(), r.getDuracionEstimada()});
+//            }
+//            
+//        }
+//        
+//    }
+    
+    public void cargaDeRutas(){
         borrarFilasRuta();
-        
-        for(Ruta r: listaRutas){
-            String origen = r.getOrigen().toLowerCase();
-            String destino = r.getDestino().toLowerCase();
-            
-            if (jrbRutas.isSelected() && (origen.contains(buscar) || destino.contains(buscar))) {
-                modelo.addRow(new Object[]{r.getOrigen(), r.getDestino(), r.getDuracionEstimada()});
-            } else if (jrbOrigen.isSelected() && origen.contains(buscar)) {
-                modelo.addRow(new Object[]{r.getOrigen(), r.getDestino(), r.getDuracionEstimada()});
-            } else if (jrbDestino.isSelected() && destino.contains(buscar)) {
-                modelo.addRow(new Object[]{r.getOrigen(), r.getDestino(), r.getDuracionEstimada()});
-            }
-            
+        String texto = jtBRuta.getText().toLowerCase();
+       
+        if (jrbOrigen.isSelected()) {
+            List<Ruta> rutasOrigen = rutData.listaRutasOrigen(texto);
+            if (!rutasOrigen.isEmpty()) {
+                for (Ruta ro:rutasOrigen) {
+                    modelo.addRow(new Object[]{ro.getOrigen(),ro.getDestino(),ro.getDuracionEstimada()});
+                }
+            }  
         }
-        
+        if (jrbDestino.isSelected()) {
+            List<Ruta> rutasDestino = rutData.listaRutasDestino(texto);
+            if (!rutasDestino.isEmpty()) {
+                for(Ruta rd:rutasDestino){
+                    modelo.addRow(new Object[]{rd.getOrigen(),rd.getDestino(),rd.getDuracionEstimada()});
+                }
+            }
+        }
+        if (jrbRutas.isSelected()) {
+            List<Ruta> rutas = rutData.listaRutasDispo();
+            for(Ruta r:rutas){
+                modelo.addRow(new Object[]{r.getOrigen(),r.getDestino(),r.getDuracionEstimada()});
+            }
+        }
     }
-    
-    
     
    
 
@@ -139,9 +170,11 @@ public class InfoRutaHorario extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
         jLabel1.setText("RUTAS");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 134, -1));
 
         jtBRuta.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.gray, java.awt.Color.gray), "Buscar Ruta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica Neue", 1, 12))); // NOI18N
         jtBRuta.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -149,6 +182,7 @@ public class InfoRutaHorario extends javax.swing.JPanel {
                 jtBRutaKeyReleased(evt);
             }
         });
+        add(jtBRuta, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 178, -1));
 
         jrbRutas.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jrbRutas.setText("Rutas");
@@ -157,6 +191,7 @@ public class InfoRutaHorario extends javax.swing.JPanel {
                 jrbRutasActionPerformed(evt);
             }
         });
+        add(jrbRutas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 94, -1));
 
         jrbOrigen.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jrbOrigen.setText("Origen");
@@ -165,6 +200,7 @@ public class InfoRutaHorario extends javax.swing.JPanel {
                 jrbOrigenActionPerformed(evt);
             }
         });
+        add(jrbOrigen, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 94, -1));
 
         jrbDestino.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jrbDestino.setText("Destino");
@@ -173,14 +209,12 @@ public class InfoRutaHorario extends javax.swing.JPanel {
                 jrbDestinoActionPerformed(evt);
             }
         });
+        add(jrbDestino, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 94, -1));
 
         jTRutas.setBackground(new java.awt.Color(128, 185, 203));
         jTRutas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "Origen", "Destino", "Duracion"
@@ -188,27 +222,36 @@ public class InfoRutaHorario extends javax.swing.JPanel {
         ));
         jScrollPane3.setViewportView(jTRutas);
 
+        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, 400, 204));
+
         jLabel2.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
         jLabel2.setText("HORARIOS");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, -1, -1));
 
         jtHSalida.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.gray, java.awt.Color.gray), "Hora Salida", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial Rounded MT Bold", 0, 12))); // NOI18N
+        jtHSalida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtHSalidaActionPerformed(evt);
+            }
+        });
+        add(jtHSalida, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, 180, 40));
 
         jcbRutas.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.gray, java.awt.Color.gray), "Rutas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial Rounded MT Bold", 0, 12))); // NOI18N
         jcbRutas.setCursor(new java.awt.Cursor(java.awt.Cursor.N_RESIZE_CURSOR));
+        add(jcbRutas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 510, 180, 40));
 
         jTHorarios.setBackground(new java.awt.Color(128, 185, 203));
         jTHorarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "Ruta", "H. Salida", "H. Llegada"
             }
         ));
         jScrollPane1.setViewportView(jTHorarios);
+
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 360, 400, 204));
 
         jbBuscar.setBackground(new java.awt.Color(128, 185, 203));
         jbBuscar.setText("Buscar");
@@ -218,136 +261,79 @@ public class InfoRutaHorario extends javax.swing.JPanel {
                 jbBuscarActionPerformed(evt);
             }
         });
+        add(jbBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 420, 76, -1));
 
         jLabel3.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(102, 102, 102));
         jLabel3.setText("Ingrese este formato HH:mm");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(44, 44, 44)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jrbDestino, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
-                                    .addComponent(jrbOrigen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jrbRutas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(62, 62, 62)
-                                .addComponent(jbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jtHSalida)
-                                    .addComponent(jtBRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jcbRutas, 0, 180, Short.MAX_VALUE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(152, 152, 152)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))))
-                .addContainerGap(52, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel1)
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jtBRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20)
-                        .addComponent(jrbRutas)
-                        .addGap(16, 16, 16)
-                        .addComponent(jrbOrigen)
-                        .addGap(16, 16, 16)
-                        .addComponent(jrbDestino))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(jtHSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(2, 2, 2)
-                        .addComponent(jLabel3)
-                        .addGap(10, 10, 10)
-                        .addComponent(jbBuscar)
-                        .addGap(18, 18, 18)
-                        .addComponent(jcbRutas, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(40, 40, 40))
-        );
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 180, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jtBRutaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtBRutaKeyReleased
-        // TODO add your handling code here:
-        llenarTabla();
+        cargaDeRutas();
     }//GEN-LAST:event_jtBRutaKeyReleased
-
-    private void jrbRutasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbRutasActionPerformed
-        // TODO add your handling code here:
-        llenarTabla();
-        jrbOrigen.setSelected(false);
-        jrbDestino.setSelected(false);
-    }//GEN-LAST:event_jrbRutasActionPerformed
 
     private void jrbOrigenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbOrigenActionPerformed
         // TODO add your handling code here:
-        llenarTabla();
-        jrbRutas.setSelected(false);
+        
         jrbDestino.setSelected(false);
+        jrbRutas.setSelected(false);
+        if (jrbOrigen.isSelected()) {
+            cargaDeRutas();
+        }
     }//GEN-LAST:event_jrbOrigenActionPerformed
 
     private void jrbDestinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbDestinoActionPerformed
         // TODO add your handling code here:
-        llenarTabla();
-        jrbRutas.setSelected(false);
+        
         jrbOrigen.setSelected(false);
+        jrbRutas.setSelected(false);
+        if (jrbDestino.isSelected()) {
+            cargaDeRutas();
+        }
         
     }//GEN-LAST:event_jrbDestinoActionPerformed
 
     private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
         // TODO add your handling code here:
-        
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-        String hSalida = jtHSalida.getText();
-        LocalTime hora = LocalTime.parse(hSalida, formatter);
-        this.listaHSalida = hrData.listaHorarioSalida(hora);
-        String rutas = jcbRutas.getSelectedItem().toString();
-        
-        borrarFilasHorario();
-        
-        for (Horario hr : listaHSalida) {
-            if (!hSalida.isEmpty()) {
-                modelo2.addRow(new Object[]{hr.getRuta(), hr.getHoraSalida(), hr.getHoraLlegada()});
+        if (jtHSalida.getText() != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            String hSalida = jtHSalida.getText();
+            LocalTime hora = LocalTime.parse(hSalida, formatter);
+            this.listaHSalida = hrData.listaHorarioSalida(hora);
+            String rutas = jcbRutas.getSelectedItem().toString();
+            borrarFilasHorario();  
+            for (Horario hr : listaHSalida) {
+                if (!hSalida.isEmpty()) {
+                    modelo2.addRow(new Object[]{hr.getRuta(), hr.getHoraSalida(), hr.getHoraLlegada()});
+                }
+            }
+
+            for(Horario ruta: listaHRutas){
+                if(rutas != null){
+                    modelo2.addRow(new Object[]{ruta.getRuta(), ruta.getHoraSalida(), ruta.getHoraLlegada()});
+                }
             }
         }
+            
         
-        for(Horario ruta: listaHRutas){
-            if(rutas != null){
-                modelo2.addRow(new Object[]{ruta.getRuta(), ruta.getHoraSalida(), ruta.getHoraLlegada()});
-            }
-        }
         
         
         
     }//GEN-LAST:event_jbBuscarActionPerformed
+
+    private void jrbRutasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbRutasActionPerformed
+        
+        jrbOrigen.setSelected(false);
+        jrbDestino.setSelected(false);
+        if(jrbRutas.isSelected()){
+            cargaDeRutas();
+        }
+    }//GEN-LAST:event_jrbRutasActionPerformed
+
+    private void jtHSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtHSalidaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtHSalidaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

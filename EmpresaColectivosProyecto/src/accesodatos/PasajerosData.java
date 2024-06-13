@@ -35,12 +35,11 @@ public class PasajerosData {
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             while(rs.next()){
-                pasajero.setIdPasajero(rs.getInt(1));
                 JOptionPane.showMessageDialog(null, "Pasajero guardado");
             }
             ps.close();
         }catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,"Error al acceder a la tabla pasajeros");
+            JOptionPane.showMessageDialog(null,"Error al acceder a la tabla pasajeros "+ex);
         }   
     }
     
@@ -101,7 +100,7 @@ public class PasajerosData {
         Pasajero pasajero = null;
         
         try{
-            String sql = " SELECT nombre, apellido, dni, correo, telefono FROM pasajeros " +
+            String sql = " SELECT * FROM pasajeros " +
                     " WHERE dni = ? AND estado = 1";
             
             PreparedStatement ps = con.prepareStatement(sql);

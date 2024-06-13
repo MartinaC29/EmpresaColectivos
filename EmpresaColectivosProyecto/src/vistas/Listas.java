@@ -11,7 +11,6 @@ package vistas;
 public class Listas extends javax.swing.JPanel {
     InfoRutaHorario rutaHorario = new InfoRutaHorario();
     InfoPasajes pasajes = new InfoPasajes();
-    InfoColectivos colectivos = new InfoColectivos();
     InfoPasajeros pasajeros = new InfoPasajeros();
     /**
      * Creates new form Listas
@@ -19,7 +18,6 @@ public class Listas extends javax.swing.JPanel {
     public Listas() {
         initComponents();
         infoEscritorio.addTab("Ruta y Horarios", rutaHorario);
-        infoEscritorio.addTab("Colectivos", colectivos);
         infoEscritorio.addTab("Pasajeros", pasajeros);
         infoEscritorio.addTab("Pasajes", pasajes);
         
