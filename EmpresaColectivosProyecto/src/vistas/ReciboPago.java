@@ -68,7 +68,7 @@ public class ReciboPago extends javax.swing.JPanel {
         add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 60, -1));
 
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel5.setText("Horario:");
+        jLabel5.setText("Duracion:");
         add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, 52, -1));
 
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));

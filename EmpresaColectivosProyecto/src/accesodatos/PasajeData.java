@@ -9,6 +9,7 @@ import entidades.Pasajero;
 import entidades.Ruta;
 import java.sql.Connection;
 import java.sql.*;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -114,7 +115,7 @@ public class PasajeData {
              
             int filas = ps.executeUpdate();
             if (filas == 1) {
-                System.out.println("Se ha eliminado el pasaje");
+                JOptionPane.showMessageDialog(null,"Se ha eliminado el pasaje");
             }
              
         }catch (SQLException ex) {
@@ -124,7 +125,7 @@ public class PasajeData {
       
     public List<Pasaje> listarPasajes(){
         List<Pasaje> pasajes = new ArrayList<>();
-        String sql = "SELECT * FROM pasajes";  
+        String sql = "SELECT * FROM pasaje";  
         RutaData rutaData = new RutaData();
         PasajerosData pasData = new PasajerosData();
         ColectivoData colData = new ColectivoData();
@@ -154,8 +155,7 @@ public class PasajeData {
     
     public List<Pasaje> listarPorRuta(Ruta ruta){
        List<Pasaje> pasajes = new ArrayList<>();
-        String sql = "SELECT * FROM pasajes WHERE idRuta = ?";  
-        RutaData rutaData = new RutaData();
+        String sql = "SELECT * FROM pasaje WHERE idRuta = ?";  
         PasajerosData pasData = new PasajerosData();
         ColectivoData colData = new ColectivoData();
         
@@ -163,13 +163,13 @@ public class PasajeData {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, ruta.getIdRuta());
             ResultSet rs = ps.executeQuery();
-                    
+                 
             while (rs.next()) {
                 Pasaje pasaje = new Pasaje();
                 pasaje.setIdPasaje(rs.getInt("idPasaje"));
                 pasaje.setPasajero(pasData.buscarPasajero(rs.getInt("idPasajero")));
                 pasaje.setColectivo(colData.buscarColectivo(rs.getInt("idColectivo")));
-                pasaje.setRuta(rutaData.buscarRuta(rs.getInt("idRuta")));
+                pasaje.setRuta(ruta);
                 pasaje.setFechaViaje(rs.getDate("fechaViaje").toLocalDate());
                 pasaje.setHoraViaje(rs.getTime("horaViaje").toLocalTime());
                 pasaje.setAsiento(rs.getInt("asiento"));
@@ -178,21 +178,21 @@ public class PasajeData {
             }
             
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla pasajes");
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla pasajes "+e);
         }
         return pasajes; 
     }
     
-    public List<Pasaje> listarPorHorario(Time hora){
+    public List<Pasaje> listarPorHorario(LocalTime hora){
         List<Pasaje> pasajes = new ArrayList<>();
-        String sql = "SELECT * FROM pasajes WHERE horaViaje = ?";  
+        String sql = "SELECT * FROM pasaje WHERE horaViaje = ?";  
         RutaData rutaData = new RutaData();
         PasajerosData pasData = new PasajerosData();
         ColectivoData colData = new ColectivoData();
         
         try{
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setTime(1, hora);
+            ps.setTime(1, Time.valueOf(hora));
             ResultSet rs = ps.executeQuery();
                     
             while (rs.next()) {
@@ -216,7 +216,7 @@ public class PasajeData {
     
     public List<Pasaje> listarPorPasajero(Pasajero pasajero){
         List<Pasaje> pasajes = new ArrayList<>();
-        String sql = "SELECT * FROM pasajes WHERE idPasajero = ?";  
+        String sql = "SELECT * FROM pasaje WHERE idPasajero = ?";  
         RutaData rutaData = new RutaData();
         PasajerosData pasData = new PasajerosData();
         ColectivoData colData = new ColectivoData();

@@ -4,17 +4,44 @@
  */
 package vistas;
 
+import accesodatos.HorarioData;
+import accesodatos.PasajeData;
+import accesodatos.PasajerosData;
+import accesodatos.RutaData;
+import entidades.Pasaje;
+import entidades.Pasajero;
+import entidades.Ruta;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author pablo
  */
 public class InfoPasajes extends javax.swing.JPanel {
-
+    PasajerosData pasData = new PasajerosData();
+    HorarioData hData = new HorarioData();
+    RutaData rData = new RutaData();
+    PasajeData pData = new PasajeData();
+    private DefaultTableModel model;
     /**
      * Creates new form infoPasajes
      */
     public InfoPasajes() {
         initComponents();
+        jlValido.setVisible(false);
+        this.model = (DefaultTableModel) jtTabla.getModel();
+        String modo = jcbModo.getSelectedItem().toString();
+        if (modo.equals("Ruta")) {
+            List<Ruta> rutas = rData.listaRutasDispo();
+            for (Ruta r:rutas) {
+                jcbSelector.addItem(r.getIdRuta()+ "," + r.getOrigen() + "," + r.getDestino());
+            }
+        }    
     }
 
     /**
@@ -26,19 +53,237 @@ public class InfoPasajes extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        jLabel2 = new javax.swing.JLabel();
+        jcbModo = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtTabla = new javax.swing.JTable();
+        jcbSelector = new javax.swing.JComboBox<>();
+        jbEliminar = new javax.swing.JButton();
+        jtIdPasaje = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jbRutaValida = new javax.swing.JLabel();
+        jlValido = new javax.swing.JLabel();
+        jbRecargarComboBox = new javax.swing.JButton();
+
+        setBackground(new java.awt.Color(255, 255, 255));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setFont(new java.awt.Font("Source Serif Pro Black", 0, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel2.setText("Historial de pasajes");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 19, 236, -1));
+
+        jcbModo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ruta", "Horario", "Pasajero" }));
+        jcbModo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbModoActionPerformed(evt);
+            }
+        });
+        add(jcbModo, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 70, -1, -1));
+
+        jtTabla.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Ruta", "Horario", "Colectivo", "Pasajero", "Fecha", "idPasaje"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, true, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jtTabla);
+
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 519, -1));
+
+        jcbSelector.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbSelectorActionPerformed(evt);
+            }
+        });
+        add(jcbSelector, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 400, -1));
+
+        jbEliminar.setText("Eliminar");
+        jbEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEliminarActionPerformed(evt);
+            }
+        });
+        add(jbEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 160, -1, -1));
+
+        jtIdPasaje.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtIdPasajeActionPerformed(evt);
+            }
+        });
+        jtIdPasaje.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtIdPasajeKeyReleased(evt);
+            }
+        });
+        add(jtIdPasaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 130, 80, -1));
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel8.setText("ID Pasaje:");
+        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 110, 80, -1));
+
+        jbRutaValida.setForeground(new java.awt.Color(255, 0, 51));
+        jbRutaValida.setText("Debe seleccionar una ruta valida");
+        add(jbRutaValida, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, 240, -1));
+
+        jlValido.setForeground(new java.awt.Color(255, 0, 51));
+        jlValido.setText("Id invalido");
+        add(jlValido, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 140, -1, -1));
+
+        jbRecargarComboBox.setText("RecargarCBox");
+        jbRecargarComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbRecargarComboBoxActionPerformed(evt);
+            }
+        });
+        add(jbRecargarComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 230, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jcbModoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbModoActionPerformed
+        jcbSelector.removeAllItems();
+        borrarFilas();
+        String modo = jcbModo.getSelectedItem().toString();
+        if (modo.equals("Ruta")) {
+            List<Ruta> rutas = rData.listaRutasDispo();
+            for (Ruta r:rutas) {
+                jcbSelector.addItem(r.getIdRuta()+ "," + r.getOrigen() + "," + r.getDestino());
+            }
+                 
+        }
+        if (modo.equals("Horario")) {
+            List<LocalTime> horas = rData.listaHoras();
+            for (LocalTime h:horas){
+                jcbSelector.addItem("Duracion: " + h.toString());
+            }
+            
+        }
+        if(modo.equals("Pasajero")){
+            List<Pasajero> pasajeros = pasData.listarPasajeros();
+            for(Pasajero p:pasajeros){
+                jcbSelector.addItem("Nombre:"+p.getNombre()+",Apellido:"+p.getApellido()+"Dni:"+p.getDni());
+            }
+            
+        }         
+    }//GEN-LAST:event_jcbModoActionPerformed
 
+    private void jcbSelectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbSelectorActionPerformed
+
+        recargarTabla();
+    }//GEN-LAST:event_jcbSelectorActionPerformed
+
+    private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
+        String idString = jtIdPasaje.getText();
+        Pasaje pasa = null;
+        if(validarEntero(idString)){
+            pasa = pData.buscarPasaje(Integer.parseInt(idString));
+            if (pasa != null) {
+                pData.eliminarPasaje(Integer.parseInt(idString));
+                jtIdPasaje.setText("");
+                recargarTabla();
+            }   
+        }else{
+            jlValido.setVisible(true);
+        }
+    }//GEN-LAST:event_jbEliminarActionPerformed
+    
+    private void recargarTabla(){
+        borrarFilas();
+        String modo = jcbModo.getSelectedItem().toString();
+        if (modo.equals("Ruta")) {
+            if (jcbSelector.getSelectedItem() != null) {
+            String preSeleccionado = jcbSelector.getSelectedItem().toString();
+            List<Ruta> rutass = rData.listaRutasDispo();
+            for(Ruta r:rutass){
+                String rut = r.getIdRuta()+ "," + r.getOrigen() + "," + r.getDestino();
+                if (rut.equals(preSeleccionado)) {
+                    List<Pasaje> pasajes = pData.listarPorRuta(r);
+                    for(Pasaje p:pasajes){
+                        model.addRow(new Object[]{p.getRuta().toString(),p.getHoraViaje().toString(),p.getColectivo().toString(),p.getPasajero().toString(),p.getFechaViaje().toString(),p.getIdPasaje()});
+                    }
+                }
+            }
+        }     
+        }
+        if (modo.equals("Horario")) {
+            List<LocalTime> horas = rData.listaHoras();
+            if(jcbSelector.getSelectedItem() != null){
+                String horaPreseleccionada = jcbSelector.getSelectedItem().toString();
+                for(LocalTime h:horas){
+                    String hor = "Duracion: " + h.toString();
+                    if (hor.equals(horaPreseleccionada)) {
+                        List<Pasaje> pasajes = pData.listarPorHorario(h);
+                        for(Pasaje p:pasajes){
+                            model.addRow(new Object[]{p.getRuta().toString(),p.getHoraViaje().toString(),p.getColectivo().toString(),p.getPasajero().toString(),p.getFechaViaje().toString(),p.getIdPasaje()});
+                        }
+                    }
+                }
+            }
+        }
+        if(modo.equals("Pasajero")){
+            List<Pasajero> pasajeros = pasData.listarPasajeros();
+            if(jcbSelector.getSelectedItem() != null){
+                String pasajeroPreseleccionado = jcbSelector.getSelectedItem().toString();
+                for(Pasajero pa: pasajeros){
+                    String pas = "Nombre:"+pa.getNombre()+",Apellido:"+pa.getApellido()+"Dni:"+pa.getDni();
+                    if(pas.equals(pasajeroPreseleccionado)){
+                        List<Pasaje> pasajes = pData.listarPorPasajero(pa);
+                        for(Pasaje p:pasajes){
+                            model.addRow(new Object[]{p.getRuta().toString(),p.getHoraViaje().toString(),p.getColectivo().toString(),p.getPasajero().toString(),p.getFechaViaje().toString(),p.getIdPasaje()});
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    private void jtIdPasajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtIdPasajeActionPerformed
+        
+    }//GEN-LAST:event_jtIdPasajeActionPerformed
+
+    private void jtIdPasajeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtIdPasajeKeyReleased
+        jlValido.setVisible(false);
+    }//GEN-LAST:event_jtIdPasajeKeyReleased
+
+    private void jbRecargarComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRecargarComboBoxActionPerformed
+        
+    }//GEN-LAST:event_jbRecargarComboBoxActionPerformed
+    
+    
+    private void borrarFilas(){
+         int filas=model.getRowCount()-1;
+         for(int f=filas;f >= 0;f--){
+             model.removeRow(f);
+         }
+    }
+
+    private boolean validarEntero(String nro){
+        Pattern patron=Pattern.compile("^[0-9]+$");
+        Matcher m=patron.matcher(nro);
+        return m.matches();
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jbEliminar;
+    private javax.swing.JButton jbRecargarComboBox;
+    private javax.swing.JLabel jbRutaValida;
+    private javax.swing.JComboBox<String> jcbModo;
+    private javax.swing.JComboBox<String> jcbSelector;
+    private javax.swing.JLabel jlValido;
+    private javax.swing.JTextField jtIdPasaje;
+    private javax.swing.JTable jtTabla;
     // End of variables declaration//GEN-END:variables
 }

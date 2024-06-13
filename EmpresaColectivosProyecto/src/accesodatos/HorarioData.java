@@ -163,8 +163,33 @@ public class HorarioData {
         }catch (SQLException ex) {
             System.out.println("Error al acceder a la tabla horario, error: " + ex);
         }
-        return horarios;
+        return horarios; 
+    }
+    
+    public List<Horario> listaHorarios(){
         
+        List<Horario> horarios = new ArrayList<>();
+        try{
+            String sql = " SELECT * FROM horario WHERE horario.estado = 1 ";
+            PreparedStatement ps = con.prepareStatement(sql);
+            
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Horario horario = new Horario();
+                horario.setIdHorario(rs.getInt("idHorario"));
+                horario.setRuta(rData.buscarRuta(rs.getInt("idRuta")));
+                horario.setHoraSalida(rs.getTime("horaSalida").toLocalTime());
+                horario.setHoraLlegada(rs.getTime("horaLlegada").toLocalTime());
+                horario.setEstado(rs.getBoolean("estado"));
+                horarios.add(horario);             
+            }
+            rs.close();
+            ps.close();
+            
+        }catch (SQLException ex) {
+            System.out.println("Error al acceder a la tabla horario, error: " + ex);
+        }
+        return horarios;
     }
     
     

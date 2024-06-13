@@ -6,6 +6,7 @@ package accesodatos;
 import entidades.Ruta;
 import java.sql.Connection;
 import java.sql.*;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -185,6 +186,22 @@ public class RutaData {
             JOptionPane.showMessageDialog(null,"Error al acceder a la tabla ruta");
         }
         return rutas;
+    }
+    
+    public List<LocalTime> listaHoras(){
+        List<LocalTime> horas = new ArrayList<>();
+    
+        try{
+            String sql = " SELECT DISTINCT duracionEstimada FROM ruta ";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                horas.add(rs.getTime("duracionEstimada").toLocalTime());
+            }
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Error al acceder a la tabla ruta");
+        }
+        return horas;
     }
     
 }

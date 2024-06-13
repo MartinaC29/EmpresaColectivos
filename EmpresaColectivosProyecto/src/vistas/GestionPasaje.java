@@ -286,7 +286,15 @@ public class GestionPasaje extends javax.swing.JPanel {
     }//GEN-LAST:event_jtOrigenKeyReleased
 
     private void jcbPasajerosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbPasajerosActionPerformed
-        
+        if(jcbPasajeros.getSelectedItem() != null){
+            String pasajeroSeleccionado = jcbPasajeros.getSelectedItem().toString();
+                for(Pasajero p:pasajeros){
+                    String pasajero = p.getNombre() + "," + p.getApellido() + "," + p.getDni();
+                    if (pasajero.equals(pasajeroSeleccionado)) {
+                        pasajeroActual = p;
+                    }
+            }
+        }
     }//GEN-LAST:event_jcbPasajerosActionPerformed
 
     private void jdFechaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jdFechaPropertyChange
