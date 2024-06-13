@@ -63,7 +63,6 @@ public class InfoPasajes extends javax.swing.JPanel {
         jLabel8 = new javax.swing.JLabel();
         jbRutaValida = new javax.swing.JLabel();
         jlValido = new javax.swing.JLabel();
-        jbRecargarComboBox = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -140,14 +139,6 @@ public class InfoPasajes extends javax.swing.JPanel {
         jlValido.setForeground(new java.awt.Color(255, 0, 51));
         jlValido.setText("Id invalido");
         add(jlValido, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 140, -1, -1));
-
-        jbRecargarComboBox.setText("RecargarCBox");
-        jbRecargarComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbRecargarComboBoxActionPerformed(evt);
-            }
-        });
-        add(jbRecargarComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 230, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jcbModoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbModoActionPerformed
@@ -254,10 +245,6 @@ public class InfoPasajes extends javax.swing.JPanel {
     private void jtIdPasajeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtIdPasajeKeyReleased
         jlValido.setVisible(false);
     }//GEN-LAST:event_jtIdPasajeKeyReleased
-
-    private void jbRecargarComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRecargarComboBoxActionPerformed
-        
-    }//GEN-LAST:event_jbRecargarComboBoxActionPerformed
     
     
     private void borrarFilas(){
@@ -278,7 +265,6 @@ public class InfoPasajes extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbEliminar;
-    private javax.swing.JButton jbRecargarComboBox;
     private javax.swing.JLabel jbRutaValida;
     private javax.swing.JComboBox<String> jcbModo;
     private javax.swing.JComboBox<String> jcbSelector;
