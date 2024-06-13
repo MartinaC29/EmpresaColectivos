@@ -187,11 +187,4 @@ public class RutaData {
         return rutas;
     }
     
-    
-    
-    
-    
-    
-    
-    
 }

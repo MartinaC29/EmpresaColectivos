@@ -4,12 +4,17 @@
  */
 package vistas;
 
+import accesodatos.RutaData;
+import entidades.Ruta;
+import java.util.List;
+
 /**
  *
  * @author pablo
  */
 public class GestionPasaje extends javax.swing.JPanel {
-
+    RutaData rData = new RutaData();
+     
     /**
      * Creates new form GestionPasaje
      */
@@ -27,15 +32,14 @@ public class GestionPasaje extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jLabel8 = new javax.swing.JLabel();
-        jtDuracion = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jtOrigen = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jcbDestino = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -45,23 +49,15 @@ public class GestionPasaje extends javax.swing.JPanel {
         jLabel1.setText("Venta de pasajes");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 150, -1));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel3.setText("Duracion:");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 140, -1, -1));
-
         jLabel4.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(102, 102, 102));
         jLabel4.setText("Elija un horario:");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 250, -1, -1));
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(102, 102, 102));
         jLabel5.setText("Elija el pasajero:");
-        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 300, -1, -1));
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, 160, -1));
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 102, 102));
@@ -70,30 +66,58 @@ public class GestionPasaje extends javax.swing.JPanel {
 
         jLabel7.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel7.setText("Origen:");
-        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
+        jLabel7.setText("Destinos:");
+        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 140, -1, -1));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 140, 150, -1));
+        jButton1.setText("Comprar pasaje");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 390, -1, -1));
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel8.setText("Destino:");
-        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 140, -1, -1));
-        add(jtDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 140, 100, -1));
+        jtOrigen.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtOrigenKeyReleased(evt);
+            }
+        });
+        add(jtOrigen, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, 150, -1));
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel9.setText("Ingrese el origen:");
+        add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
+
+        add(jcbDestino, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 140, 240, -1));
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jtOrigenKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtOrigenKeyReleased
+        jcbDestino.removeAllItems();
+        String origenSeleccionado = jtOrigen.getText();
+        List<Ruta> rutas = rData.listaRutasOrigen(origenSeleccionado);
+        for(Ruta r:rutas){
+            jcbDestino.addItem("Dest: " + r.getDestino() + ", Dur.Est:" + r.getDuracionEstimada());
+        }
+    }//GEN-LAST:event_jtOrigenKeyReleased
+    
+    private void refrescarComboBox(){
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JTextField jtDuracion;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JComboBox<String> jcbDestino;
+    private javax.swing.JTextField jtOrigen;
     // End of variables declaration//GEN-END:variables
 }
