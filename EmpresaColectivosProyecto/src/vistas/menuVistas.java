@@ -4,6 +4,7 @@
  */
 package vistas;
 import java.awt.*;
+
 /**
  *
  * @author pablo
@@ -13,6 +14,7 @@ public class menuVistas extends javax.swing.JFrame {
     Gestion gestiones = new Gestion();
     GestionPasaje ventaPasaje = new GestionPasaje();
     Listas listas = new Listas();
+    boolean pestañasCreadas;
     /**
      * Creates new form menuVistas
      */
@@ -23,7 +25,7 @@ public class menuVistas extends javax.swing.JFrame {
         escritorio.addTab("gestion", gestiones);
         escritorio.addTab("ventaPasaje", ventaPasaje);
         escritorio.addTab("info",listas);
-        
+        pestañasCreadas = true;
     }
 
     /**
@@ -35,7 +37,7 @@ public class menuVistas extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jpMenu = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jbInformacion = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -54,14 +56,14 @@ public class menuVistas extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(908, 588));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(0, 0, 204));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jpMenu.setBackground(new java.awt.Color(0, 0, 204));
+        jpMenu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("COLECTIVOS SL");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, -1, -1));
+        jpMenu.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, -1, -1));
 
         jbInformacion.setBackground(new java.awt.Color(0, 51, 204));
         jbInformacion.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -81,7 +83,7 @@ public class menuVistas extends javax.swing.JFrame {
         jLabel2.setPreferredSize(new java.awt.Dimension(39, 19));
         jbInformacion.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 120, -1));
 
-        jPanel1.add(jbInformacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 200, 45));
+        jpMenu.add(jbInformacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 200, 45));
 
         jbInicio.setBackground(new java.awt.Color(0, 51, 204));
         jbInicio.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -101,7 +103,7 @@ public class menuVistas extends javax.swing.JFrame {
         jLabel5.setPreferredSize(new java.awt.Dimension(39, 19));
         jbInicio.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 50, -1));
 
-        jPanel1.add(jbInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 168, 200, 45));
+        jpMenu.add(jbInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 168, 200, 45));
 
         jbVentaPasajes.setBackground(new java.awt.Color(0, 51, 204));
         jbVentaPasajes.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -121,7 +123,7 @@ public class menuVistas extends javax.swing.JFrame {
         jLabel6.setPreferredSize(new java.awt.Dimension(39, 19));
         jbVentaPasajes.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 100, -1));
 
-        jPanel1.add(jbVentaPasajes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 200, 45));
+        jpMenu.add(jbVentaPasajes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 200, 45));
 
         jbSalir.setText("X");
         jbSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -129,7 +131,7 @@ public class menuVistas extends javax.swing.JFrame {
                 jbSalirActionPerformed(evt);
             }
         });
-        jPanel1.add(jbSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 550, -1, -1));
+        jpMenu.add(jbSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 550, -1, -1));
 
         jbGestiones.setBackground(new java.awt.Color(0, 51, 204));
         jbGestiones.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -149,9 +151,15 @@ public class menuVistas extends javax.swing.JFrame {
         jLabel7.setPreferredSize(new java.awt.Dimension(39, 19));
         jbGestiones.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 70, -1));
 
-        jPanel1.add(jbGestiones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 200, 45));
+        jpMenu.add(jbGestiones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 200, 45));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 590));
+        getContentPane().add(jpMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 590));
+
+        escritorio.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                escritorioStateChanged(evt);
+            }
+        });
         getContentPane().add(escritorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, -30, 730, 620));
 
         pack();
@@ -197,6 +205,11 @@ public class menuVistas extends javax.swing.JFrame {
         jbInformacion.setBackground(new Color(0,102,204));
     }//GEN-LAST:event_jbInformacionMousePressed
 
+    private void escritorioStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_escritorioStateChanged
+
+      
+    }//GEN-LAST:event_escritorioStateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -239,11 +252,11 @@ public class menuVistas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jbGestiones;
     private javax.swing.JPanel jbInformacion;
     private javax.swing.JPanel jbInicio;
     private javax.swing.JButton jbSalir;
     private javax.swing.JPanel jbVentaPasajes;
+    private javax.swing.JPanel jpMenu;
     // End of variables declaration//GEN-END:variables
 }

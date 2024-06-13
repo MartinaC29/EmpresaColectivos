@@ -24,7 +24,7 @@ public class ColectivoData {
     
     public void guardarColectivo(Colectivo colectivo){
         String sql = "INSERT INTO colectivo(matricula,marca,modelo,capacidad,estado) "
-                + "VALUES (?,?,?,?,?)";
+                + "VALUES (?,?,?,?,?,?)";
         
         try {
             PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
@@ -32,7 +32,8 @@ public class ColectivoData {
             ps.setString(2,colectivo.getMarca());
             ps.setString(3,colectivo.getModelo());
             ps.setInt(4,colectivo.getCapacidad());
-            ps.setBoolean(5, colectivo.isEstado());
+            ps.setInt(5,colectivo.getAsientosOcupados());
+            ps.setBoolean(6, colectivo.isEstado());
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             
@@ -48,7 +49,7 @@ public class ColectivoData {
     public Colectivo buscarColectivo(int id){
         Colectivo colectivo = null;
         
-        String sql = "SELECT `matricula`, `marca`, `modelo`, `capacidad` FROM `colectivo` WHERE idColectivo = ? AND estado = 1";
+        String sql = "SELECT `matricula`, `marca`, `modelo`, `capacidad`, asientosOcupados FROM `colectivo` WHERE idColectivo = ? AND estado = 1";
         
         try {
            PreparedStatement ps = con.prepareStatement(sql);
@@ -63,6 +64,7 @@ public class ColectivoData {
                 colectivo.setMarca(rs.getString("marca"));
                 colectivo.setModelo(rs.getString("modelo"));
                 colectivo.setCapacidad(rs.getInt("capacidad"));
+                colectivo.setAsientosOcupados(rs.getInt("asientosOcupados"));
                 colectivo.setEstado(true);
             }
             
@@ -153,6 +155,7 @@ public class ColectivoData {
                 colectivo.setMarca(rs.getString("marca"));
                 colectivo.setModelo(rs.getString("modelo"));
                 colectivo.setCapacidad(rs.getInt("capacidad"));
+                colectivo.setAsientosOcupados(rs.getInt("asientosOcupados"));
                 colectivo.setEstado(rs.getBoolean("estado"));
                 colectivos.add(colectivo);
             }

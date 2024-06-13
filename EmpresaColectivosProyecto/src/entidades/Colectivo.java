@@ -14,12 +14,13 @@ public class Colectivo {
     private String marca;
     private String modelo;
     private int capacidad;
+    private int asientosOcupados;
     private boolean estado;
     
     public Colectivo() {
     }
 
-    public Colectivo(int idColectivo, String matricula, String marca, String modelo, int capacidad, boolean estado) {
+    public Colectivo(int idColectivo, String matricula, String marca, String modelo, int capacidad, int asientosOcupados, boolean estado) {
         this.idColectivo = idColectivo;
         this.matricula = matricula;
         this.marca = marca;
@@ -28,13 +29,21 @@ public class Colectivo {
         this.estado = estado;
     }
 
-    public Colectivo(String matricula, String marca, String modelo, int capacidad, boolean estado) {
+    public Colectivo(String matricula, String marca, String modelo, int capacidad, int asientosOcupados, boolean estado) {
         this.matricula = matricula;
         this.marca = marca;
         this.modelo = modelo;
         this.capacidad = capacidad;
         this.estado = estado;
     } 
+
+    public int getAsientosOcupados() {
+        return asientosOcupados;
+    }
+
+    public void setAsientosOcupados(int asientosOcupados) {
+        this.asientosOcupados = asientosOcupados;
+    }
     
     public int getIdColectivo() {
         return idColectivo;

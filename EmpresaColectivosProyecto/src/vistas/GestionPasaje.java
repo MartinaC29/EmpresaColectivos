@@ -4,7 +4,13 @@
  */
 package vistas;
 
+import accesodatos.ColectivoRutaData;
+import accesodatos.HorarioData;
+import accesodatos.PasajerosData;
 import accesodatos.RutaData;
+import entidades.Colectivo;
+import entidades.Horario;
+import entidades.Pasajero;
 import entidades.Ruta;
 import java.util.List;
 
@@ -13,13 +19,21 @@ import java.util.List;
  * @author pablo
  */
 public class GestionPasaje extends javax.swing.JPanel {
+    PasajerosData pData = new PasajerosData();
     RutaData rData = new RutaData();
-     
+    HorarioData hData = new HorarioData();
+    ColectivoRutaData crData = new ColectivoRutaData();
+    List<Pasajero> pasajeros;
+    Ruta rutaActual = null;
+    Horario horarioActual = null;
+    Pasajero pasajeroActual = null;
+    Colectivo colectivoActual = null;
     /**
      * Creates new form GestionPasaje
      */
     public GestionPasaje() {
         initComponents();
+        jcbPasajeros.setEnabled(false);
     }
 
     /**
@@ -40,6 +54,10 @@ public class GestionPasaje extends javax.swing.JPanel {
         jtOrigen = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jcbDestino = new javax.swing.JComboBox<>();
+        jcbHorarios = new javax.swing.JComboBox<>();
+        jcbPasajeros = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -51,13 +69,13 @@ public class GestionPasaje extends javax.swing.JPanel {
 
         jLabel4.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel4.setText("Elija un horario:");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, -1, -1));
+        jLabel4.setText("Colectivos:");
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(102, 102, 102));
         jLabel5.setText("Elija el pasajero:");
-        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, -1, -1));
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 102, 102));
@@ -90,6 +108,22 @@ public class GestionPasaje extends javax.swing.JPanel {
         add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
 
         add(jcbDestino, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 140, 240, -1));
+
+        add(jcbHorarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, 230, -1));
+
+        jcbPasajeros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbPasajerosActionPerformed(evt);
+            }
+        });
+        add(jcbPasajeros, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 290, 260, -1));
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel8.setText("Horario:");
+        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, -1, -1));
+
+        add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 240, 200, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -98,26 +132,66 @@ public class GestionPasaje extends javax.swing.JPanel {
 
     private void jtOrigenKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtOrigenKeyReleased
         jcbDestino.removeAllItems();
-        String origenSeleccionado = jtOrigen.getText();
-        List<Ruta> rutas = rData.listaRutasOrigen(origenSeleccionado);
-        for(Ruta r:rutas){
-            jcbDestino.addItem("Dest: " + r.getDestino() + ", Dur.Est:" + r.getDuracionEstimada());
+        jcbHorarios.removeAllItems();
+        String origenSeleccionado = jtOrigen.getText().toLowerCase();
+        List<Ruta> rutasOrigen = rData.listaRutasOrigen(origenSeleccionado);
+        List<Ruta> rutas = rData.listaRutasDispo();
+        rutaActual = null;
+        horarioActual = null;
+        colectivoActual = null;
+        for(Ruta r:rutasOrigen){
+            jcbDestino.addItem("Dest: " + r.getDestino() + ", Dur.Est: " + r.getDuracionEstimada());
+        }  
+        if (jcbDestino.getSelectedItem() != null) {
+            String rutaSeleccionada = origenSeleccionado + jcbDestino.getSelectedItem();
+            for(Ruta r:rutas){
+                String ruta = r.getOrigen().toLowerCase() + "Dest: " + r.getDestino() + ", Dur.Est: " + r.getDuracionEstimada();
+                
+                if (ruta.equals(rutaSeleccionada)) {
+                    rutaActual= r; 
+                    List<Horario> horarios = hData.listaHorarioRutas(rutaActual);
+                    for(Horario h:horarios){
+                        jcbHorarios.addItem("Hora lleg: " + h.getHoraLlegada().toString() + "Hora sal: " + h.getHoraSalida());
+                        horarioActual = h;
+                    }
+                }
+            }
+        }
+        if (rutaActual != null) {
+            List<Colectivo> colectivos = crData.obtenerColectivosPorRuta(rutaActual.getIdRuta());
+        }
+        if (rutaActual != null && horarioActual != null) {
+            jcbPasajeros.setEnabled(true);
+            refrescarComboBox();
+        }else{
+            jcbPasajeros.setEnabled(false);
         }
     }//GEN-LAST:event_jtOrigenKeyReleased
+
+    private void jcbPasajerosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbPasajerosActionPerformed
+        
+    }//GEN-LAST:event_jcbPasajerosActionPerformed
     
     private void refrescarComboBox(){
-        
+        this.pasajeros = pData.listarPasajeros();
+        for(Pasajero p:pasajeros){
+            jcbPasajeros.addItem(p.getNombre() + "," + p.getApellido() + "," + p.getDni());
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JComboBox<String> jcbDestino;
+    private javax.swing.JComboBox<String> jcbHorarios;
+    private javax.swing.JComboBox<String> jcbPasajeros;
     private javax.swing.JTextField jtOrigen;
     // End of variables declaration//GEN-END:variables
 }
