@@ -62,11 +62,8 @@ public class GestionRutaHorario extends javax.swing.JPanel {
                 if(sruta.equals(rutaSeleccionada)){
                     this.listaHorarios = hrData.listaHorarioRutas(r);
                 }
-            }
-            
+            }   
         }
-        
-
     }
     
     private void limpiarCampos(){

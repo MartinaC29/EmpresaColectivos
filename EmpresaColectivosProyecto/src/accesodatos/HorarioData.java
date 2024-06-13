@@ -51,7 +51,7 @@ public class HorarioData {
     public Horario buscarhorario(int id){
         Horario horario = null;
         
-        String sql = "SELECT `idRuta`, `horaSalida`, `horaLlegada` FROM `horario` WHERE idHorario = ? AND estado = 1";
+        String sql = "SELECT `idRuta`, `horaSalida`, `horaLlegada` FROM `horario` WHERE idHorario = ? ";
         
         try {
            PreparedStatement ps = con.prepareStatement(sql);

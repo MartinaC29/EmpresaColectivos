@@ -237,7 +237,8 @@ public class GestionPasajeros extends javax.swing.JPanel {
             }else{
                 telefonoInvalido.setVisible(true);
             }
-
+            correo = jtCorreo.getText();
+            
             if (!dniInvalido.isVisible() && !nombreInvalido.isVisible() && !apellidoInvalido.isVisible() && !correoInvalido.isVisible()  && !telefonoInvalido.isVisible()) {
                 if (pasajActual == null) {
                     pasajActual = new Pasajero(nombre,apellido,dni,correo,tel,true);

@@ -80,7 +80,6 @@ public class PasajeData {
     public Pasaje buscarPasaje(int id){
         Pasaje pasaje = null;
 
-       
         try{
             String sql = " SELECT idPasajero, idColectivo, idruta, fechaViaje, horaViaje, asiento, precio " +
                     " FROM pasaje WHERE idPasaje = ? ";

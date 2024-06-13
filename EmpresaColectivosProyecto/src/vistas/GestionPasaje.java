@@ -301,11 +301,9 @@ public class GestionPasaje extends javax.swing.JPanel {
         jbFechaValida.setVisible(false);
     }//GEN-LAST:event_jdFechaPropertyChange
     
-    private void refrescarComboBox(){
-        this.pasajeros = pData.listarPasajeros();
-        for(Pasajero p:pasajeros){
-            jcbPasajeros.addItem(p.getNombre() + "," + p.getApellido() + "," + p.getDni());
-        }
+    public void refrescarComboBox(){
+        
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

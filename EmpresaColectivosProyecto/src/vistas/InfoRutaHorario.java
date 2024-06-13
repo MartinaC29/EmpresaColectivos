@@ -94,26 +94,6 @@ public class InfoRutaHorario extends javax.swing.JPanel {
          }
     }
     
-//    public void llenarTabla(){
-//        String buscar = jtBRuta.getText().toLowerCase();
-//        
-//        borrarFilasRuta();
-//        
-//        for(Ruta r: listaRutas){
-//            String origen = r.getOrigen().toLowerCase();
-//            String destino = r.getDestino().toLowerCase();
-//            
-//            if (jrbRutas.isSelected() && (origen.contains(buscar) || destino.contains(buscar))) {
-//                modelo.addRow(new Object[]{r.getOrigen(), r.getDestino(), r.getDuracionEstimada()});
-//            } else if (jrbOrigen.isSelected() && origen.contains(buscar)) {
-//                modelo.addRow(new Object[]{r.getOrigen(), r.getDestino(), r.getDuracionEstimada()});
-//            } else if (jrbDestino.isSelected() && destino.contains(buscar)) {
-//                modelo.addRow(new Object[]{r.getOrigen(), r.getDestino(), r.getDuracionEstimada()});
-//            }
-//            
-//        }
-//        
-//    }
     
     public void cargaDeRutas(){
         borrarFilasRuta();
@@ -222,7 +202,7 @@ public class InfoRutaHorario extends javax.swing.JPanel {
         ));
         jScrollPane3.setViewportView(jTRutas);
 
-        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, 400, 204));
+        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, 400, 204));
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
         jLabel2.setText("HORARIOS");
@@ -256,7 +236,7 @@ public class InfoRutaHorario extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(jTHorarios);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 360, 400, 204));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 310, 400, 204));
 
         jbBuscar.setBackground(new java.awt.Color(128, 185, 203));
         jbBuscar.setText("Buscar");
@@ -304,34 +284,21 @@ public class InfoRutaHorario extends javax.swing.JPanel {
         borrarFilasHorario(); 
         if (jtHSalida.getText() != null) {
             if (validarHora(jtHSalida.getText())) {
-                
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
                 String hSalida = jtHSalida.getText();
                 LocalTime hora = LocalTime.parse(hSalida, formatter);
                 this.listaHSalida = hrData.listaHorarioSalida(hora);
-                
-
-             
                 for (Horario hr : listaHSalida) {
-                    if (!listaHSalida.isEmpty()) {
-                        
+                    if (!listaHSalida.isEmpty()) {      
                         modelo2.addRow(new Object[]{hr.getRuta(), hr.getHoraSalida(), hr.getHoraLlegada()});
                     }
                 }
-
-
             }else{
                 JOptionPane.showMessageDialog(null,"Hora invalida");
-            }
-            
+            }  
         }else{
             JOptionPane.showMessageDialog(null,"El campo está vacio");
-        }
-            
-        
-        
-        
-        
+        }    
     }//GEN-LAST:event_jbBuscarActionPerformed
 
     private void jrbRutasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbRutasActionPerformed

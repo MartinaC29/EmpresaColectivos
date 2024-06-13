@@ -49,7 +49,7 @@ public class ColectivoData {
     public Colectivo buscarColectivo(int id){
         Colectivo colectivo = null;
         
-        String sql = "SELECT `matricula`, `marca`, `modelo`, `capacidad`, asientosOcupados FROM `colectivo` WHERE idColectivo = ? AND estado = 1";
+        String sql = "SELECT `matricula`, `marca`, `modelo`, `capacidad`, asientosOcupados FROM `colectivo` WHERE idColectivo = ? ";
         
         try {
            PreparedStatement ps = con.prepareStatement(sql);

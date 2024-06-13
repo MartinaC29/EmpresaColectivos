@@ -71,7 +71,7 @@ public class PasajerosData {
         
         try{
             String sql = " SELECT nombre, apellido, dni, correo, telefono FROM pasajeros " +
-                    " WHERE idPasajero = ? AND estado = 1 ";
+                    " WHERE idPasajero = ? ";
             
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);

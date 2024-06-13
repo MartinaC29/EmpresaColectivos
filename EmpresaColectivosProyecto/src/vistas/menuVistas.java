@@ -207,7 +207,6 @@ public class menuVistas extends javax.swing.JFrame {
 
     private void escritorioStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_escritorioStateChanged
         
-      
     }//GEN-LAST:event_escritorioStateChanged
 
     /**

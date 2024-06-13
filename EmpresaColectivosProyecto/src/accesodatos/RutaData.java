@@ -68,7 +68,7 @@ public class RutaData {
         Ruta ruta = null;
         try{
             String sql = " SELECT origen, destino, duracionEstimada FROM ruta " +
-                    " WHERE idRuta = ? AND estado = 1 ";
+                    " WHERE idRuta = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             
             ps.setInt(1, id);
