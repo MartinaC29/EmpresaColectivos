@@ -3,18 +3,91 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package vistas;
-
+import entidades.Ruta;
+import entidades.Horario;
+import accesodatos.RutaData;
+import accesodatos.HorarioData;
+import java.time.LocalTime;
+import javax.swing.JOptionPane;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.List;
 /**
  *
  * @author pablo
  */
 public class GestionRutaHorario extends javax.swing.JPanel {
+    private RutaData rutData = new RutaData();
+    private Ruta rutaActual = new Ruta();
+    private HorarioData hrData = new HorarioData();
+    private Horario hrActual = new Horario();
+    List<Ruta> listaRutasDispo;
+    List<Horario> listaHorarios;
+   
 
     /**
      * Creates new form GestionRutaHorario
      */
     public GestionRutaHorario() {
         initComponents();
+        origenInvalido.setVisible(false);
+        destinoInvalido.setVisible(false);
+        duracionInvalida.setVisible(false);
+        salidaInvalida.setVisible(false);
+        llegadaInvalida.setVisible(false);
+        
+                
+    }
+    
+    private void refrescarComboBox(){
+        jcbRutas.removeAllItems();
+        HRutas.removeAllItems();
+        jcbHorarios.removeAllItems();
+        
+        this.listaRutasDispo = rutData.listaRutasDispo();
+        this.listaHorarios = hrData.listaHorarioRutas(rutaActual);
+        
+        for (Ruta r : listaRutasDispo) {
+            jcbRutas.addItem(r.getOrigen() + " - "  + r.getDestino() + " - "  + r.getDuracionEstimada());
+        }
+        for (Ruta r2 : listaRutasDispo) {
+             HRutas.addItem(r2.getOrigen() + " - "   + r2.getDestino() + " - "   + r2.getDuracionEstimada());
+        }
+        
+        for(Horario h: listaHorarios){
+           jcbHorarios.addItem(h.getHoraSalida() + " - "  + h.getHoraLlegada());
+        }
+
+    }
+    
+    private void limpiarCampos(){
+        jtOrigen.setText("");
+        jtDestino.setText("");
+        jtDuracion.setText("");
+        origenInvalido.setVisible(false);
+        destinoInvalido.setVisible(false);
+        duracionInvalida.setVisible(false);
+    }
+     
+    private void limpiarCamposHorario(){
+        jtHSalida.setText("");
+        jtHLlegada.setText("");
+        salidaInvalida.setVisible(false);
+        llegadaInvalida.setVisible(false);
+    } 
+    
+    private boolean validarTexto(String string){
+        Pattern patron = Pattern.compile("^[a-zA-ZáéíóúÁÉÍÓÚ]+$");
+        Matcher match=patron.matcher(string);
+        return match.matches();
+    }
+    
+    private boolean validarHora(String string){
+        Pattern patron = Pattern.compile("^([01]?[0-9]|2[0-3]):[0-5][0-9]$");
+        Matcher match = patron.matcher(string);
+        return match.matches();
     }
 
     /**
@@ -26,19 +99,475 @@ public class GestionRutaHorario extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jbAgregar = new javax.swing.JButton();
+        jtOrigen = new javax.swing.JTextField();
+        jtDestino = new javax.swing.JTextField();
+        jtDuracion = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        HRutas = new javax.swing.JComboBox<>();
+        jtHSalida = new javax.swing.JTextField();
+        jbAñadir = new javax.swing.JButton();
+        jbHEliminar = new javax.swing.JButton();
+        jtHLlegada = new javax.swing.JTextField();
+        jcbHorarios = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        salidaInvalida = new javax.swing.JLabel();
+        llegadaInvalida = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jcbRutas = new javax.swing.JComboBox<>();
+        origenInvalido = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        destinoInvalido = new javax.swing.JLabel();
+        duracionInvalida = new javax.swing.JLabel();
+        jbEliminar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+
+        setBackground(new java.awt.Color(204, 204, 204));
+
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("RUTAS");
+
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+
+        jbAgregar.setText("Agregar");
+        jbAgregar.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.gray, java.awt.Color.gray));
+        jbAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbAgregarActionPerformed(evt);
+            }
+        });
+
+        jtOrigen.setBackground(new java.awt.Color(204, 204, 204));
+        jtOrigen.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(null, new java.awt.Color(255, 255, 255)), "Origen", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial Rounded MT Bold", 0, 14))); // NOI18N
+
+        jtDestino.setBackground(new java.awt.Color(204, 204, 204));
+        jtDestino.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(null, new java.awt.Color(255, 255, 255)), "Destino", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial Rounded MT Bold", 0, 14))); // NOI18N
+
+        jtDuracion.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(102, 102, 102), new java.awt.Color(51, 51, 51)));
+
+        jLabel4.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 16)); // NOI18N
+        jLabel4.setText("Duración:");
+
+        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
+
+        jLabel3.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 16)); // NOI18N
+        jLabel3.setText("Rutas:");
+
+        HRutas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                HRutasActionPerformed(evt);
+            }
+        });
+
+        jtHSalida.setBackground(new java.awt.Color(204, 204, 204));
+        jtHSalida.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.white, java.awt.Color.white), "Hora Salida", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial Rounded MT Bold", 0, 14))); // NOI18N
+
+        jbAñadir.setText("Añadir");
+        jbAñadir.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.gray, java.awt.Color.gray));
+        jbAñadir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbAñadirActionPerformed(evt);
+            }
+        });
+
+        jbHEliminar.setText("Eliminar");
+        jbHEliminar.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.gray, java.awt.Color.gray));
+        jbHEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbHEliminarActionPerformed(evt);
+            }
+        });
+
+        jtHLlegada.setBackground(new java.awt.Color(204, 204, 204));
+        jtHLlegada.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.white, java.awt.Color.white), "Hora Llegada", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial Rounded MT Bold", 0, 14))); // NOI18N
+
+        jcbHorarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbHorariosActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 16)); // NOI18N
+        jLabel6.setText("Buscar Horarios:");
+
+        salidaInvalida.setForeground(new java.awt.Color(255, 0, 0));
+        salidaInvalida.setText("Horario invalido.");
+
+        llegadaInvalida.setForeground(new java.awt.Color(255, 0, 0));
+        llegadaInvalida.setText("Horario invalido.");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jcbHorarios, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jbHEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel6)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(HRutas, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(salidaInvalida, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jbAñadir, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(25, 25, 25))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jtHLlegada, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                                        .addComponent(jtHSalida))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(llegadaInvalida, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(HRutas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addComponent(jtHSalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(2, 2, 2)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbAñadir)
+                    .addComponent(salidaInvalida))
+                .addGap(10, 10, 10)
+                .addComponent(jtHLlegada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1)
+                .addComponent(llegadaInvalida)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jcbHorarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbHEliminar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jLabel5.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 16)); // NOI18N
+        jLabel5.setText("Buscar Ruta:");
+
+        jcbRutas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbRutasActionPerformed(evt);
+            }
+        });
+
+        origenInvalido.setForeground(new java.awt.Color(255, 0, 0));
+        origenInvalido.setText("Origen invalido.");
+
+        jSeparator1.setBackground(new java.awt.Color(255, 255, 255));
+        jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
+        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        destinoInvalido.setForeground(new java.awt.Color(255, 0, 0));
+        destinoInvalido.setText("Destino invalido.");
+
+        duracionInvalida.setForeground(new java.awt.Color(255, 0, 0));
+        duracionInvalida.setText("Hora y/o minutos invalidos.");
+
+        jbEliminar.setText("Eliminar");
+        jbEliminar.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.gray, java.awt.Color.gray));
+        jbEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEliminarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jtDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(destinoInvalido, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(duracionInvalida, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jtDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jtOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(origenInvalido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(jcbRutas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel5))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jbAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jbEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 8, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jtOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(2, 2, 2)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(origenInvalido)
+                            .addComponent(jbAgregar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(2, 2, 2)
+                        .addComponent(destinoInvalido)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jtDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addGap(2, 2, 2)
+                        .addComponent(duracionInvalida, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jcbRutas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbEliminar))))
+                .addContainerGap(34, Short.MAX_VALUE))
+        );
+
+        jLabel2.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
+        jLabel2.setText("HORARIO");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(110, 110, 110)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(160, 160, 160))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jbAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAgregarActionPerformed
+        // TODO add your handling code here:
+        String origen = null;
+        String destino = null;
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        
+        try{
+            if(jtOrigen.getText().isEmpty() ||  jtDestino.getText().isEmpty() ||  jtDuracion.getText().isEmpty()){
+                JOptionPane.showMessageDialog(this, "Hay campos sin completar");   
+            }else{
+                //Validar Origen
+                if(validarTexto(jtOrigen.getText())){
+                    origen = jtOrigen.getText();
+                }else{
+                    origenInvalido.setVisible(true);
+                }
+                //validar destino
+                if(validarTexto(jtDestino.getText())){
+                    destino = jtDestino.getText();
+                }else{
+                    destinoInvalido.setVisible(true);
+                }
+                
+                String duracionS = jtDuracion.getText();
+                LocalTime duracion = LocalTime.parse(duracionS, formatter);
+                
+                if (rutaActual == null) {
+                    rutaActual = new Ruta(rutaActual.getIdRuta(), origen, destino, duracion, rutaActual.isEstado());
+                    rutData.guardarRuta(rutaActual);
+                } else {
+                    rutaActual.setOrigen(origen);
+                    rutaActual.setDestino(destino);
+                    rutaActual.setDuracionEstimada(duracion);
+                    rutData.actualizarRuta(rutaActual);
+                }
+                
+                limpiarCampos();
+            }
+            
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(this, "Formato de hora inválido. Por favor ingrese la duración en el formato HH:mm", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Ocurrió un error al guardar la ruta: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+       refrescarComboBox(); 
+
+    }//GEN-LAST:event_jbAgregarActionPerformed
+
+        
+    private void jcbRutasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRutasActionPerformed
+        // TODO add your handling code here:
+        for(Ruta r: listaRutasDispo){
+            String rt = r.getOrigen() + " - " + r.getDestino();
+            jcbRutas.addItem(rt);
+        }
+    }//GEN-LAST:event_jcbRutasActionPerformed
+
+    private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
+        // TODO add your handling code here:
+        String rutaSelect = jcbRutas.getSelectedItem().toString(); 
+        if (rutaSelect != null) {
+            jcbRutas.removeItem(rutaSelect);
+        } else {
+            JOptionPane.showMessageDialog(this, "No hay elementos seleccionados para eliminar.");
+        }
+        
+        refrescarComboBox();
+        
+    }//GEN-LAST:event_jbEliminarActionPerformed
+
+    private void HRutasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HRutasActionPerformed
+        // TODO add your handling code here:
+        for(Ruta r: listaRutasDispo){
+            String Hrutas = r.getOrigen() + " - " + r.getDestino();
+            HRutas.addItem(Hrutas);
+        }
+        
+    }//GEN-LAST:event_HRutasActionPerformed
+
+    private void jbAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAñadirActionPerformed
+        // TODO add your handling code here:
+        String hSalida = null;
+        String hLlegada = null;
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        LocalTime horaSalida = null;
+        LocalTime horaLlegada = null;
+        
+        try{
+            if (validarHora(jtHSalida.getText())) {
+                hSalida = jtHSalida.getText();
+                horaSalida = LocalTime.parse(hSalida, formatter);
+            } else {
+                salidaInvalida.setVisible(true);
+            }
+
+            if (validarHora(jtHLlegada.getText())) {
+                hLlegada = jtHLlegada.getText();
+                horaLlegada = LocalTime.parse(hLlegada, formatter);
+            } else {
+                llegadaInvalida.setVisible(true);
+            }
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(this, "Formato de hora inválido. Por favor ingrese la duración en el formato HH:mm", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        if (horaSalida != null && horaLlegada != null){
+            if (hrActual == null) {
+                hrActual = new Horario(hrActual.getIdHorario(),hrActual.getRuta(),horaSalida, horaLlegada, hrActual.isEstado());
+                hrData.guardarhorario(hrActual);
+            } else {
+                hrActual.setHoraSalida(horaSalida);
+                hrActual.setHoraLlegada(horaLlegada);
+                hrData.actualizarhorario(hrActual);
+            }
+  
+        }
+
+        limpiarCamposHorario();
+        refrescarComboBox();   
+    }//GEN-LAST:event_jbAñadirActionPerformed
+
+    private void jbHEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbHEliminarActionPerformed
+        // TODO add your handling code here:
+        String horarioSelect = jcbHorarios.getSelectedItem().toString(); 
+        if (horarioSelect != null) {
+            jcbHorarios.removeItem(horarioSelect);
+        } else {
+            JOptionPane.showMessageDialog(this, "No hay elementos seleccionados para eliminar.");
+        }
+        
+        refrescarComboBox();
+    }//GEN-LAST:event_jbHEliminarActionPerformed
+
+    private void jcbHorariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbHorariosActionPerformed
+        // TODO add your handling code here:
+        for(Horario h: listaHorarios){
+           String hr = h.getHoraSalida() + " - " + h.getHoraLlegada();
+           jcbHorarios.addItem(hr);
+        }
+    }//GEN-LAST:event_jcbHorariosActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> HRutas;
+    private javax.swing.JLabel destinoInvalido;
+    private javax.swing.JLabel duracionInvalida;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JButton jbAgregar;
+    private javax.swing.JButton jbAñadir;
+    private javax.swing.JButton jbEliminar;
+    private javax.swing.JButton jbHEliminar;
+    private javax.swing.JComboBox<String> jcbHorarios;
+    private javax.swing.JComboBox<String> jcbRutas;
+    private javax.swing.JTextField jtDestino;
+    private javax.swing.JTextField jtDuracion;
+    private javax.swing.JTextField jtHLlegada;
+    private javax.swing.JTextField jtHSalida;
+    private javax.swing.JTextField jtOrigen;
+    private javax.swing.JLabel llegadaInvalida;
+    private javax.swing.JLabel origenInvalido;
+    private javax.swing.JLabel salidaInvalida;
     // End of variables declaration//GEN-END:variables
 }
