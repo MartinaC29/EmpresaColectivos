@@ -296,24 +296,35 @@ public class InfoRutaHorario extends javax.swing.JPanel {
 
     private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
         // TODO add your handling code here:
+        borrarFilasHorario(); 
         if (jtHSalida.getText() != null) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-            String hSalida = jtHSalida.getText();
-            LocalTime hora = LocalTime.parse(hSalida, formatter);
-            this.listaHSalida = hrData.listaHorarioSalida(hora);
-            String rutas = jcbRutas.getSelectedItem().toString();
-            borrarFilasHorario();  
-            for (Horario hr : listaHSalida) {
-                if (!hSalida.isEmpty()) {
-                    modelo2.addRow(new Object[]{hr.getRuta(), hr.getHoraSalida(), hr.getHoraLlegada()});
+            if (validarHora(jtHSalida.getText())) {
+                System.out.println("hola");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+                String hSalida = jtHSalida.getText();
+                LocalTime hora = LocalTime.parse(hSalida, formatter);
+                this.listaHSalida = hrData.listaHorarioSalida(hora);
+                
+//                String rutas = jcbRutas.getSelectedItem().toString();
+             
+                for (Horario hr : listaHSalida) {
+                    if (!listaHSalida.isEmpty()) {
+                        
+                        modelo2.addRow(new Object[]{hr.getRuta(), hr.getHoraSalida(), hr.getHoraLlegada()});
+                    }
                 }
-            }
 
-            for(Horario ruta: listaHRutas){
-                if(rutas != null){
-                    modelo2.addRow(new Object[]{ruta.getRuta(), ruta.getHoraSalida(), ruta.getHoraLlegada()});
-                }
+//                for(Horario ruta: listaHRutas){
+//                    if(rutas != null){
+//                        modelo2.addRow(new Object[]{ruta.getRuta(), ruta.getHoraSalida(), ruta.getHoraLlegada()});
+//                    }
+//                }
+            }else{
+                JOptionPane.showMessageDialog(null,"Hora invalida");
             }
+            
+        }else{
+            JOptionPane.showMessageDialog(null,"El campo está vacio");
         }
             
         
@@ -334,7 +345,12 @@ public class InfoRutaHorario extends javax.swing.JPanel {
     private void jtHSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtHSalidaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtHSalidaActionPerformed
-
+    
+    private boolean validarHora(String string){
+        Pattern patron = Pattern.compile("^(?:[01]\\d|2[0-3]):[0-5]\\d$");
+        Matcher match = patron.matcher(string);
+        return match.matches();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

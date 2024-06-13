@@ -144,7 +144,7 @@ public class HorarioData {
         List<Horario> horarios = new ArrayList<>();
         
         try{
-            String sql = " SELECT * FROM horario INNER JOIN ruta ON horario.idRuta = ruta.idRuta WHERE horaSalida = ? AND estado = 1 ";
+            String sql = " SELECT * FROM horario INNER JOIN ruta ON horario.idRuta = ruta.idRuta WHERE horaSalida = ? AND horario.estado = 1 ";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setTime(1, Time.valueOf(horaSalida));
             ResultSet rs = ps.executeQuery();
