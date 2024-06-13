@@ -97,6 +97,39 @@ public class PasajerosData {
         return pasajero;
     }
     
+    public Pasajero buscarPasajeroDNI(int dni){
+        Pasajero pasajero = null;
+        
+        try{
+            String sql = " SELECT nombre, apellido, dni, correo, telefono FROM pasajeros " +
+                    " WHERE dni = ? AND estado = 1";
+            
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, dni);
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next()){
+                pasajero = new Pasajero();
+                pasajero.setIdPasajero(rs.getInt("idPasajero"));
+                pasajero.setNombre(rs.getString("nombre"));
+                pasajero.setApellido(rs.getString("apellido"));
+                pasajero.setDni(rs.getInt("dni"));
+                pasajero.setCorreo(rs.getString("correo"));
+                pasajero.setTel(rs.getInt("telefono"));
+                pasajero.setEstado(true);
+                
+            }else{
+                JOptionPane.showMessageDialog(null, "No existe el pasajero con dni: " + dni);
+            }
+            
+            
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Error al acceder a la tabla pasajero");
+        }  
+        return pasajero;
+    }
+    
+    
     public void eliminarPasajero(int id){
          try{
             String sql = " UPDATE pasajeros SET estado = 0 WHERE idPasajero = ? ";
