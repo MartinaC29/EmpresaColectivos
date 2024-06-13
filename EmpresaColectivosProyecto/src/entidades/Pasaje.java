@@ -111,15 +111,9 @@ public class Pasaje {
         this.precio = precio;
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    @Override
+    public String toString() {
+        return "Pasaje{" + "idPasaje=" + idPasaje + ", pasajero=" + pasajero + ", colectivo=" + colectivo + ", ruta=" + ruta + ", fechaViaje=" + fechaViaje + ", horaViaje=" + horaViaje + ", asiento=" + asiento + ", precio=" + precio + '}';
+    }
+  
 }

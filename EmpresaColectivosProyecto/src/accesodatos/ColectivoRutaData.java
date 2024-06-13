@@ -73,6 +73,7 @@ public class ColectivoRutaData {
                 col.setMarca(rs.getString("marca"));
                 col.setModelo(rs.getString("modelo"));
                 col.setCapacidad(rs.getInt("capacidad"));
+                col.setAsientosOcupados(rs.getInt("asientosOcupados"));
                 col.setEstado(rs.getBoolean("estado"));
                 colectivos.add(col);
             }   
@@ -98,6 +99,7 @@ public class ColectivoRutaData {
                 col.setMarca(rs.getString("marca"));
                 col.setModelo(rs.getString("modelo"));
                 col.setCapacidad(rs.getInt("capacidad"));
+                col.setAsientosOcupados(rs.getInt("asientosOcupados"));
                 col.setEstado(rs.getBoolean("estado"));
                 colectivos.add(col);
             }   

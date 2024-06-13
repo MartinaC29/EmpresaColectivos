@@ -140,6 +140,25 @@ public class ColectivoData {
         }
     }
     
+    public void actualizarAsientosOcupados(Colectivo colectivo){
+        String sql = "UPDATE colectivo SET asientosOcupados = ? "
+                    + "WHERE idColectivo = ?";   
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            
+            ps.setInt(1, colectivo.getAsientosOcupados() + 1);
+            ps.setInt(2,colectivo.getIdColectivo());
+            
+            int fila = ps.executeUpdate();
+                    
+            if (fila == 1) {
+                System.out.println("Asientos actualizado");
+            }
+        }catch (SQLException ex) {
+            System.out.println("Error al acceder a la tabla colectivo, error: " + ex);
+        }
+    }
+    
     public List<Colectivo> listarColectivos(){
         List<Colectivo> colectivos = new ArrayList<>();
         String sql = "SELECT * FROM colectivo WHERE estado = 1";
@@ -150,7 +169,7 @@ public class ColectivoData {
             
             while (rs.next()) {
                 Colectivo colectivo = new Colectivo();
-                colectivo.setIdColectivo(rs.getInt("idPasajero"));
+                colectivo.setIdColectivo(rs.getInt("idColectivo"));
                 colectivo.setMatricula(rs.getString("matricula"));
                 colectivo.setMarca(rs.getString("marca"));
                 colectivo.setModelo(rs.getString("modelo"));
@@ -161,9 +180,10 @@ public class ColectivoData {
             }
             
         }catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,"Error al acceder a la tabla colectivos");
+            JOptionPane.showMessageDialog(null,"Error al acceder a la tabla colectivos" + ex);
         }
         return colectivos;
     }
+    
 }
 

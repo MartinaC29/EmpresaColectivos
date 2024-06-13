@@ -32,8 +32,8 @@ public class EmpresaColectivos {
         HorarioData horaData = new HorarioData();
         PasajerosData pasajeroData = new PasajerosData();
         
-        Colectivo cole1 = new Colectivo(1,"11","Volvo","4",50,true);
-        Colectivo cole2 = new Colectivo(2,"13","Mercedes","X12",45,true);
+        Colectivo cole1 = new Colectivo(1,"11","Volvo","4",50,0,true);
+        Colectivo cole2 = new Colectivo(2,"13","Mercedes","X12",45,0,true);
         
         Ruta ruta1 = new Ruta(1,"Buenos Aires","San Luis, capital",LocalTime.of(12,0),true);
         Ruta ruta2 = new Ruta(2,"Misiones","Corrientes",LocalTime.of(4, 0),true);

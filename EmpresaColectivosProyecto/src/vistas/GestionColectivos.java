@@ -153,7 +153,7 @@ public class GestionColectivos extends javax.swing.JPanel {
             
             if (!jlCapacidad.isVisible()) {
                 if (colectivoActual == null) {
-                    colectivoActual = new Colectivo(matricula,marca,modelo,capacidad,true);
+                    colectivoActual = new Colectivo(matricula,marca,modelo,capacidad,0,true);
                     coleData.guardarColectivo(colectivoActual);
                 }else{
                     colectivoActual.setMatricula(matricula);

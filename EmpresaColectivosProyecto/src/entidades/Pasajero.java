@@ -97,7 +97,7 @@ public class Pasajero {
     
     @Override
     public String toString(){
-        return "Pasajero: {" + "idPasajero="+ idPasajero + ", nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni + '}';
+        return "nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni;
     }
     
     

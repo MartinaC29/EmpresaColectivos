@@ -30,7 +30,7 @@ public class PasajeData {
         String sql = " INSERT INTO pasaje(idPasajero, idColectivo, idruta, fechaViaje, horaViaje, asiento, precio) " +
                     " VALUES (?,?,?,?,?,?,?) ";
         try{
-            PreparedStatement ps = con.prepareStatement(sql);
+            PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, pasaje.getPasajero().getIdPasajero());
             ps.setInt(2, pasaje.getColectivo().getIdColectivo());
             ps.setInt(3, pasaje.getRuta().getIdRuta());

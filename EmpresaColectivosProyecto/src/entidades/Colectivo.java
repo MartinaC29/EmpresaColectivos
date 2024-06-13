@@ -94,7 +94,7 @@ public class Colectivo {
     }
     
     public String toString() {
-        return "Colectivo{" + "idColectivo=" + idColectivo + ", matricula=" + matricula + ", capacidad=" + capacidad + '}';
+        return "matricula:" + matricula + "marca:" + marca +", capacidad=" + capacidad;
     }
     
 }
